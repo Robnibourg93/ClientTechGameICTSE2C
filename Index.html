@@ -2,19 +2,11 @@
 	<head>
 		<script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-		<script>
-		$( document ).ready(function(){
-			var socket = io.connect("http://localhost:8080");
-			socket.on("ServerMessage", function (data) {
-				alert(data);
-			});
-			$("#myButton").click(function(){ //Don’t forget the Jquery library
-				socket.emit("ClientMessage", "Hello World");
-			});
-		})
-		</script>
+        <script src="Scripts/client.js"></script>
+        <link rel="stylesheet" href="Styleheets/main.css" />
 	</head>
 	<body>
-	<button id="myButton">SWAG~!</button>
+        <canvas id="gameCanvas"></canvas>
+	    <button id="myButton">SWAG~!</button>
 	</body>
 </html>
