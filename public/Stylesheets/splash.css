@@ -4,7 +4,7 @@ body{
     text-align: center;
     background: url("../Resources/Splash.png");
     background-size: 100%;
-    background-repeat: round;
+    background-repeat: no-repeat;
 }
 
 #splash{
