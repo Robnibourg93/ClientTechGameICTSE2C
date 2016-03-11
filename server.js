@@ -23,23 +23,32 @@ io.on("connection", function(socket) {
         io.emit("message", data); //to all connected clients
     });
 
+    
+
     socket.on("Player", function (player) {
 
         player.id = socket.id;
 
         var found = false;
-        //check if player allready connected
+
+        //check if player allready connected ifso update player pos and size
         for (var i = 0; i < players.length; i++) {
             if (players[i].id == player.id) {
+                players[i].x = player.x;
+                players[i].y = player.y;
+                players[i].width = player.width;
+                players[i].height = player.height;
                 found = true;
                 break;
             }
         }
+
         //if not connected create new player
         if (!found) {
             console.log("New player: " + player.id);
             players.push(player);
-
+            socket.broadcast.emit("newPlayer", player);
+            socket.emit("getPlayers", players);
             players.forEach(function (player) {
                 console.log(player.id);
             })
@@ -48,6 +57,8 @@ io.on("connection", function(socket) {
         socket.broadcast.emit("Players", players); //to all other connected clients
         io.emit("Players", players); //to all connected clients
     });
+
+    
 
     socket.on('disconnect', function (data) {
         var found = false;
@@ -62,6 +73,7 @@ io.on("connection", function(socket) {
             }
 
         }
+        socket.broadcast.emit("removePlayer", disconnectedPlayer);
         //check if player is found
         if (!found) {
             console.log('player not found and thus not removed from list');
