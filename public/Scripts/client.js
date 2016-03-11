@@ -94,24 +94,18 @@ $(document).ready(function () {
 
     //listens if there's new Players
     socket.on("Players", function (players) {
-        console.log(JSON.stringify(remotePlayers) +" met "+ JSON.stringify(players));
         if (JSON.stringify(remotePlayers) != JSON.stringify(players)) {
             remotePlayers = players;
             var Allfound = false;
             var table = $("#players tbody");
 
-            console.log('loop');
             //update table data
             remotePlayers.forEach(function (player) {
-                console.log('loop');
                 table.find('tr').each(function (i) {
-                    console.log('Looping through table found: '+i);
                     var $tds = $(this).find('td'),
                         id = $tds.eq(0).text();
                     // do something with productId, product, Quantity
                     if (player.id == id) {
-                        console.log('Row found trying to update values for'+player.id);
-                        console.log(JSON.stringify(player));
                         $(this).find('#Px').html(player.x);
                         $(this).find('#Py').html(player.y);
                         $(this).find('#Pwidth').html(player.width);
