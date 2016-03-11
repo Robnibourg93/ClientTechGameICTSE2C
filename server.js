@@ -1,5 +1,6 @@
 var http = require('http');
-var server = http.createServer( handler );
+var server = http.createServer(handler);
+var players = [];
 server.listen(8080);
 console.log("listening on port 8080");
 
@@ -14,10 +15,83 @@ var io = require("socket.io").listen(server);
 
 
 io.on("connection", function(socket) {
+
     console.log("user connected: " + socket.id);
+
     socket.on("ClientMessage", function (data) {
         socket.broadcast.emit("ServerMessage", data); //to all other connected clients
         io.emit("message", data); //to all connected clients
     });
+
+    
+
+    socket.on("Player", function (player) {
+
+        player.id = socket.id;
+
+        var found = false;
+
+        //check if player allready connected ifso update player pos and size
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id == player.id) {
+                players[i].x = player.x;
+                players[i].y = player.y;
+                players[i].width = player.width;
+                players[i].height = player.height;
+                found = true;
+                break;
+            }
+        }
+
+        //if not connected create new player
+        if (!found) {
+            console.log("New player: " + player.id);
+            players.push(player);
+            socket.broadcast.emit("newPlayer", player);
+            socket.emit("getPlayers", players);
+            players.forEach(function (player) {
+                console.log(player.id);
+            })
+
+        }
+        socket.broadcast.emit("Players", players); //to all other connected clients
+        io.emit("Players", players); //to all connected clients
+    });
+
+    
+
+    socket.on('disconnect', function (data) {
+        var found = false;
+        var disconnectedPlayer;
+        //try to remove player from list
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].id == socket.id) {
+                disconnectedPlayer = players[i];
+                players.splice(i, 1);
+                found = true;
+                break;
+            }
+
+        }
+        socket.broadcast.emit("removePlayer", disconnectedPlayer);
+        //check if player is found
+        if (!found) {
+            console.log('player not found and thus not removed from list');
+        }
+        //check if player is removed from list
+        if (found) {
+            found = false;
+            for (var i = 0; i < players.length; i++) {
+                if (players[i].id == disconnectedPlayer.id) {
+                    console.log('Whoa! Player was found but not removed from list');
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                console.log('Succes, player with id:'+disconnectedPlayer.id+' has been disconnected and removed from list');
+            }
+        }
+    })
 });
 
