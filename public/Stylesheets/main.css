@@ -1,9 +1,14 @@
-*{
-	
+h1 {
+    color: white;
+    text-align: center;
+    font-size:10em;
+
 }
+
 
 body {
     background-color: #2c3e50;
+    font-family: Megrim;
 }
 
 #mainContainer{
@@ -18,7 +23,7 @@ body {
     margin-left: auto ;
 	margin-right: auto ;
 	display: block;
-    -webkit-box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.75);
-    -moz-box-shadow:    0px 0px 15px 0px rgba(255, 255, 255, 0.60);
-    box-shadow:         0px 0px 15px 0px rgba(255, 255, 255, 0.60);
+    -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 5, 34, 0.75);
+    -moz-box-shadow:    0px 0px 15px 5px rgba(0, 5, 34, 0.60);
+    box-shadow:         0px 0px 15px 5px rgba(0, 5, 34, 0.60);
 }

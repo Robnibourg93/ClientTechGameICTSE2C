@@ -1,4 +1,4 @@
-var context;
+﻿var context;
 var rightKey = false;
 var leftKey = false;
 var upKey = false;
@@ -20,9 +20,14 @@ $(document).ready(function () {
     localPlayer.y = game.height / 10;
     //this will set the loop for drawing. sort of timer as it were.
     setInterval(draw, 25);
+    var background = new Image();
+    background.src = "./Resources/gameBackground.png";
+    context.drawImage(background,0,0);   
+
 
     function clearCanvas() {
         context.clearRect(0, 0, game.width, game.height);
+        context.drawImage(background, 0, 0);
     }
 
     function draw() {
