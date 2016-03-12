@@ -52,17 +52,19 @@ io.on("connection", function(socket) {
             players.forEach(function (player) {
                 console.log(player.id);
             })
-
         }
-        socket.broadcast.emit("Players", players); //to all other connected clients
+        //to all other connected clients
+        socket.broadcast.emit("Players", players); 
         io.emit("Players", players); //to all connected clients
     });
 
     
 
     socket.on('disconnect', function (data) {
+
         var found = false;
         var disconnectedPlayer;
+
         //try to remove player from list
         for (var i = 0; i < players.length; i++) {
             if (players[i].id == socket.id) {
@@ -73,11 +75,15 @@ io.on("connection", function(socket) {
             }
 
         }
+
+        //Broadcast deleted player
         socket.broadcast.emit("removePlayer", disconnectedPlayer);
+
         //check if player is found
         if (!found) {
             console.log('player not found and thus not removed from list');
         }
+
         //check if player is removed from list
         if (found) {
             found = false;
