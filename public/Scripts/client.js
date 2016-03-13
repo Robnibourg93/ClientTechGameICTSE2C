@@ -7,13 +7,14 @@ var speed = 5;
 var block_h = 30;
 var block_w = 30;
 var game = {};
-var localPlayer = {width:30,height:30,name:''};
+var localPlayer = { width: 30, height: 30, name: '' };
+
 var remotePlayers = [];
 
 $(document).ready(function () {
     //get player name from hiddenfield
     localPlayer.name = $('#playerName').val();
-
+    name = $("input#name");
     console.log(localPlayer.name);
     //get context game canvas
     context = $('#gameCanvas')[0].getContext('2d');
@@ -29,24 +30,14 @@ $(document).ready(function () {
     //this will set the game-loop for drawing. sort of timer as it were.
     setInterval(draw, 25);
 
-    //load background image from resources
-
-    /* currently disabled developing -> player names
-        var background = new Image();
-        background.src = "./Resources/gameBackground.png";
-        context.drawImage(background,0,0);   
-    */
-
     //need to clear canvas else older drawings will polute game canvas(trail behind player for )
     function clearCanvas() {
         context.clearRect(0, 0, game.width, game.height);
-       // context.drawImage(background, 0, 0);
     }
 
     //game loop -> this part is needed to be rewitten so we can use player.moveTo(x,y). This will increase preformance of the propably.
     function draw() {
         clearCanvas();
-
 
         //if button is pushed move player by [speed]
         if (rightKey) localPlayer.x += speed;
@@ -124,11 +115,11 @@ $(document).ready(function () {
                 player.height + "</td></tr>");  
         })
     })
-
     //listens if remote players have changed.
     socket.on("Players", function (players) {
         //this is kind of a hack to compare 2 json objects with each other. we can use this since the position of the player objects within the players doesn't change.
         if (JSON.stringify(remotePlayers) != JSON.stringify(players)) {
+
             //update localPlayer list.
             remotePlayers = players;
 
@@ -184,6 +175,77 @@ $(document).ready(function () {
 
     })
 
+    function updateTips(t) {
+        tips
+          .text(t)
+          .addClass("ui-state-highlight");
+        setTimeout(function () {
+            tips.removeClass("ui-state-highlight", 1500);
+        }, 500);
+    }
+
+    function checkLength(o, n, min, max) {
+        console.log(o.);
+        if (o.val().length > max || o.val().length < min) {
+            o.addClass("ui-state-error");
+            updateTips("Length of " + n + " must be between " +
+              min + " and " + max + ".");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function checkRegexp(o, regexp, n) {
+        if (!(regexp.test(o.val()))) {
+            o.addClass("ui-state-error");
+            updateTips(n);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    function changeName() {
+        var valid = true;
+
+        valid = valid && checkLength(name, "username", 3, 16);
+
+        valid = valid && checkRegexp(name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
+
+        if (valid) {
+            localPlayer.name = name.val();
+            dialog.dialog("close");
+        }
+        return valid;
+    }
+
+
+    dialog = $( "#dialog-form" ).dialog({
+        autoOpen: false,
+        height: 240,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Change name": changeName,
+            Cancel: function() {
+                dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            form[ 0 ].reset();
+        }
+    });
+ 
+    form = dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+        changeName();
+    });
+ 
+    $( "#change-name" ).button().on( "click", function() {
+        dialog.dialog( "open" );
+    });
 
     //Set game canvas width and height - 100 so it doesnt fill whole screen. (-100 serves as some kind of margin)
     $("#gameCanvas").width(window.innerWidth - 100);

@@ -2,7 +2,6 @@ h1 {
     color: white;
     text-align: center;
     font-size:10em;
-
 }
 
 
@@ -17,12 +16,19 @@ body {
 	position: relative;
 	
 }
+.player-name-modal {
+    background-color:#ecf0f1;
+    width: 300px;
+    height: 300px;
+}
 
 #gameCanvas {
-    background-color: white;
+    background-image:url('../Resources/gameBackground.png');
     margin-left: auto ;
 	margin-right: auto ;
 	display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
     -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 5, 34, 0.75);
     -moz-box-shadow:    0px 0px 15px 5px rgba(0, 5, 34, 0.60);
     box-shadow:         0px 0px 15px 5px rgba(0, 5, 34, 0.60);
