@@ -185,7 +185,7 @@ $(document).ready(function () {
     }
 
     function checkLength(o, n, min, max) {
-        console.log(o.);
+        console.log(o);
         if (o.val().length > max || o.val().length < min) {
             o.addClass("ui-state-error");
             updateTips("Length of " + n + " must be between " +
