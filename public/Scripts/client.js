@@ -13,46 +13,28 @@ var gravity = 0.3;
 var boxes = [];
 
 // dimensions
-boxes.push({
-    x: 0,
-    y: 0,
-    width: 10,
-    height: 200
-});
-boxes.push({
-    x: 0,
-    y: 200 - 2,
-    width: 600,
-    height: 50
-});
-boxes.push({
-    x: 600 - 10,
-    y: 0,
-    width: 50,
-    height: 200
-});
 
 boxes.push({
-    x: 120,
-    y: 10,
+    x: 920,
+    y: 350,
     width: 80,
     height: 80
 });
 boxes.push({
-    x: 170,
-    y: 50,
+    x: 970,
+    y: 400,
     width: 80,
     height: 80
 });
 boxes.push({
-    x: 220,
-    y: 100,
+    x: 1020,
+    y: 300,
     width: 80,
     height: 80
 });
 boxes.push({
-    x: 270,
-    y: 150,
+    x: 570,
+    y: 450,
     width: 40,
     height: 40
 });
@@ -114,7 +96,7 @@ $(document).ready(function () {
         localPlayer.grounded = false;
         for (var i = 0; i < boxes.length; i++) {
             context.fillStyle = "green";
-            context.rect(boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
+            context.fillRect(boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
 
             var dir = colCheck(localPlayer, boxes[i]);
 
@@ -123,20 +105,21 @@ $(document).ready(function () {
                 localPlayer.jumping = false;
             } else if (dir === "b") {
                 localPlayer.grounded = true;
-                localPlayerr.jumping = false;
+                localPlayer.jumping = false;
             } else if (dir === "t") {
                 localPlayer.velY *= -1;
             }
 
         }
 
-        if (localPlayer.grounded) {
-            localPlayer.velY = 0;
-        }
+
 
         localPlayer.x += localPlayer.velX;
         localPlayer.y += localPlayer.velY;
-        
+
+       if (localPlayer.grounded) {
+            localPlayer.velY = 0;
+        }
         //Prevents a player to get out of the canvas
         if (localPlayer.x >= game.width - localPlayer.width) {
             localPlayer.x = game.width - localPlayer.width;
@@ -164,8 +147,6 @@ $(document).ready(function () {
 
         //draw other players
         remotePlayers.forEach(function (player) {
-
-                console.log(JSON.stringify(player));
                 context.fillStyle = "red";
                 context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
                 context.fillRect(player.x, player.y, player.width, player.height);
