@@ -23,7 +23,7 @@ body {
 }
 
 #gameCanvas {
-    background-image:url('../Resources/gameBackground.png');
+    background-image:url('../Resources/gameBackgroundTree.jpg');
     margin-left: auto ;
 	margin-right: auto ;
 	display: block;
