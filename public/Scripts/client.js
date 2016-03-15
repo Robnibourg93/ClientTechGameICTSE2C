@@ -6,7 +6,7 @@ var downKey = false;
 var block_h = 30;
 var block_w = 30;
 var game = {};
-var localPlayer = {width: 30, height: 30, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0, jumping: false};
+var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0, jumping: false};
 var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
@@ -139,7 +139,7 @@ $(document).ready(function () {
         
         //draw player
         context.fillStyle = "red";
-        context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
+        //context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
 
         //this will send the localPlayer to the server
         socket.emit("Player", localPlayer);
@@ -147,14 +147,12 @@ $(document).ready(function () {
         //draw name
         context.fillText(localPlayer.name, localPlayer.x - (localPlayer.width / 5), localPlayer.y - 5);
 
-        //draw square -> should be replaced with sprite
-        context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
 
         //draw other players
         remotePlayers.forEach(function (player) {
                 context.fillStyle = "red";
                 context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
-                context.fillRect(player.x, player.y, player.width, player.height);
+                context.drawImage(playerSprite, 1, 1, 128, 128, player.x, player.y, player.width, player.height)
         });
     }
 
@@ -165,7 +163,9 @@ $(document).ready(function () {
         
 
         sw	= 128
-        sh	= 128
+        sh = 128
+        sx = 1;
+        sy = 1;
         
         dx	= localPlayer.x
         dy	= localPlayer.y
@@ -259,6 +259,7 @@ $(document).ready(function () {
 
     //connect to server
     var socket = io.connect("http://localhost:8080");
+    var id = socket.io.engine.id;
 
     //listens to ServerMessage
     socket.on("ServerMessage", function (data) {
