@@ -11,6 +11,9 @@ var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
 var boxes = [];
+var playerSprite = new Image();
+var animationSpeed = 8;
+playerSprite.src = "./Resources/Sprites/DudeFull.png";
 
 // dimensions
 
@@ -88,6 +91,8 @@ $(document).ready(function () {
           
         }
         
+        animatePlayer();
+
         //Friction (slide) and gravity is set
         localPlayer.velX *= friction;
         localPlayer.velY += gravity;
@@ -143,7 +148,7 @@ $(document).ready(function () {
         context.fillText(localPlayer.name, localPlayer.x - (localPlayer.width / 5), localPlayer.y - 5);
 
         //draw square -> should be replaced with sprite
-        context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, block_h);
+        context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
 
         //draw other players
         remotePlayers.forEach(function (player) {
@@ -153,6 +158,46 @@ $(document).ready(function () {
         });
     }
 
+    function animatePlayer() {
+
+        spriteWidthHeight = 1408;
+
+        
+
+        sw	= 128
+        sh	= 128
+        
+        dx	= localPlayer.x
+        dy	= localPlayer.y
+        dw	= localPlayer.width
+        dh	= localPlayer.height
+
+
+        if (localPlayer.jumping && localPlayer.velX > 0) {
+            //animate jump right
+            startFrame = { x: 1, y: 5 }
+            endFrame = { x: 1, y: 6 }
+
+        }
+        if (localPlayer.jumping && localPlayer.velX < 0) {
+            startFrame = { x: 3, y: 10}
+            endFrame = { x: 3, y: 11 }
+            //animate jump left
+        }
+        if (!localPlayer.jumping && localPlayer.velX < 0) {
+            //animate walk left
+            startFrame = { x: 5, y: 6 }
+            endFrame = { x: 6, y: 8 }
+            
+        }
+        if (!localPlayer.jumping && localPlayer.velX < 0) {
+            startFrame = { x: 4, y: 1 }
+            endFrame = { x: 5, y: 3 }
+            
+        }
+
+        context.drawImage(playerSprite, sx, sy, sw, sh, dx, dy, dw, dh)
+    }
 
     function colCheck(shapeA, shapeB) {
         // get the vectors to check against
