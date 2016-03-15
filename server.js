@@ -23,17 +23,18 @@ io.on("connection", function(socket) {
         io.emit("message", data); //to all connected clients
     });
 
-    
+        io.emit('getId',socket.id);
 
     socket.on("Player", function (player) {
 
         player.id = socket.id;
-
+        
         var found = false;
 
         //check if player allready connected ifso update player pos and size
         for (var i = 0; i < players.length; i++) {
             if (players[i].id == player.id) {
+                players[i].name = player.name
                 players[i].x = player.x;
                 players[i].y = player.y;
                 players[i].width = player.width;
@@ -46,6 +47,7 @@ io.on("connection", function(socket) {
         //if not connected create new player
         if (!found) {
             console.log("New player: " + player.id);
+            io.emit('getId', player);
             players.push(player);
             socket.broadcast.emit("newPlayer", player);
             socket.emit("getPlayers", players);
