@@ -6,13 +6,14 @@ var downKey = false;
 var block_h = 30;
 var block_w = 30;
 var game = {};
-var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0, jumping: false};
+var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 1,playerSpriteY: 1, jumping: false};
 var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
 var boxes = [];
 var playerSprite = new Image();
-var animationSpeed = 8;
+var animationSpeed = 10;
+var frameCounter;
 playerSprite.src = "./Resources/Sprites/DudeFull.png";
 
 // dimensions
@@ -60,7 +61,9 @@ $(document).ready(function () {
     localPlayer.y = game.height -5 ;
 
     //this will set the game-loop for drawing. sort of timer as it were.
-    setInterval(draw, 12);
+    drawing = setInterval(draw, 12);
+    setInterval(animatePlayer, 150);
+    //clearInterval(drawing);
 
     var pl = [];
 
@@ -90,8 +93,8 @@ $(document).ready(function () {
         if (downKey) {
           
         }
+            //animatePlayer();
         
-        animatePlayer();
 
         //Friction (slide) and gravity is set
         localPlayer.velX *= friction;
@@ -152,51 +155,137 @@ $(document).ready(function () {
         remotePlayers.forEach(function (player) {
                 context.fillStyle = "red";
                 context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
-                context.drawImage(playerSprite, 1, 1, 128, 128, player.x, player.y, player.width, player.height)
+                var spritex = localPlayer.playerSpriteX * playerSprite.width / 11;
+                var spritey = localPlayer.playerSpriteY * playerSprite.width / 11;
+                context.drawImage(playerSprite, spritey, spritex, 128, 128, player.x, player.y, player.width, player.height)
         });
     }
-
+    var jumpingRight = false, jumpingLeft = false, runningRight = false, runningLeft = false;
+    var animationFrame = { x: 1, Y: 1 };
     function animatePlayer() {
-
-        spriteWidthHeight = 1408;
-
-        
-
-        sw	= 128
-        sh = 128
-        sx = 1;
-        sy = 1;
-        
-        dx	= localPlayer.x
-        dy	= localPlayer.y
-        dw	= localPlayer.width
-        dh	= localPlayer.height
-
 
         if (localPlayer.jumping && localPlayer.velX > 0) {
             //animate jump right
-            startFrame = { x: 1, y: 5 }
-            endFrame = { x: 1, y: 6 }
-
+            
+            if (!jumpingRight) {
+                console.log('jumping right');
+                endFrame = { x: 1, y: 6 };
+                startFrame = { x: 1, y: 5 };
+                jumpingRight = true;
+            }
+            
+            
+            if (!startFrame.x == 11) {
+                startFrame.x += 1;
+            } else {
+                startFrame.x = 1;
+                if (!startFrame.y == 11) {
+                    startFrame.y += 1;
+                } else {
+                    startFrame = { x: 1, y: 5 }
+                }
+            }
+            
+            
+            if(startFrame.x == endFrame.x && startFrame.y == endFrame.y){
+                jumpingRight = false;
+            }
+            localPlayer.playerSpriteX = startFrame.x;
+            localPlayer.playerSpriteY = startFrame.y;
+            console.log(localPlayer.playerSpriteX);
+            jumpingLeft = false, runningRight = false, runningLeft = false;
         }
         if (localPlayer.jumping && localPlayer.velX < 0) {
-            startFrame = { x: 3, y: 10}
-            endFrame = { x: 3, y: 11 }
             //animate jump left
+            
+            if (!jumpingLeft) {
+                console.log('jumping left');
+                startFrame = { x: 3, y: 10 }
+                endFrame = { x: 3, y: 11 }
+                jumpingLeft = true;
+            }
+
+
+            if (!startFrame.x == 11) {
+                startFrame.x += 1;
+            } else {
+                startFrame.x = 1;
+                if(!startFrame.y ==11){
+                    startFrame.y += 1;
+                }else{
+                   startFrame = { x: 3, y: 10 }
+                }       
+            }
+
+            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
+                jumpingLeft = false;
+            }
+            localPlayer.playerSpriteX = startFrame.x;
+            localPlayer.playerSpriteY = startFrame.y;
+            console.log(localPlayer.playerSpriteX);
         }
         if (!localPlayer.jumping && localPlayer.velX < 0) {
             //animate walk left
-            startFrame = { x: 5, y: 6 }
-            endFrame = { x: 6, y: 8 }
             
-        }
-        if (!localPlayer.jumping && localPlayer.velX < 0) {
-            startFrame = { x: 4, y: 1 }
-            endFrame = { x: 5, y: 3 }
-            
-        }
+            if (!runningLeft) {
+                console.log('walk left');
+                startFrame = { x: 5, y: 6 }
+                endFrame = { x: 6, y: 8 }
+                runningLeft = true;
+            }
 
-        context.drawImage(playerSprite, sx, sy, sw, sh, dx, dy, dw, dh)
+
+            if (!startFrame.x == 11) {
+                startFrame.x += 1;
+            } else {
+                startFrame.x = 1;
+                if (!startFrame.y == 11) {
+                    startFrame.y += 1;
+                } else {
+                    startFrame = { x: 5, y: 6 }
+                }
+            }
+
+            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
+                runningLeft = false;
+            }
+            localPlayer.playerSpriteX = startFrame.x;
+            localPlayer.playerSpriteY = startFrame.y;
+            console.log(localPlayer.playerSpriteX);
+        }
+        if (!localPlayer.jumping && localPlayer.velX > 0) {
+            //animate walk Right
+            
+            if (!runningRight) {
+                
+                startFrame = { x: 4, y: 1 }
+                endFrame = { x: 5, y: 3 }
+                runningRight = true;
+            }
+
+
+            if (!startFrame.x == 11) {
+                startFrame.x += 1;
+            } else {
+                startFrame.x = 1;
+                if (!startFrame.y == 11) {
+                    startFrame.y += 1;
+                } else {
+                    startFrame = { x: 4, y: 1 }
+                }
+            }
+
+            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
+                console.log('walk right');
+                runningRight = false;
+            }
+            localPlayer.playerSpriteX = startFrame.x;
+            localPlayer.playerSpriteY = startFrame.y;
+            console.log(localPlayer.playerSpriteX);
+        }
+        if(localPlayer.vel){
+        
+        }
     }
 
     function colCheck(shapeA, shapeB) {
