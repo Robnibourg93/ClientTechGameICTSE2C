@@ -17,15 +17,16 @@ body {
 }
 
 h1{
-    padding-top: 3%;
+    color: #e0ebcf;
     font-family: Megrim;
     font-size: 116px;
-    color: #e0ebcf;
+    padding-top: 3%;
+
 
 }
 
 .row{
-    padding-top: 10%;
+    padding-top: 2%;
     font-family: 'Lato', sans-serif;
 }
 
