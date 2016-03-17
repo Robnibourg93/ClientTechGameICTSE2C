@@ -2,22 +2,26 @@ body{
     width: 100%;
     height: 100%;
     text-align: center;
-    background: url("../Resources/Splash.png");
+    background: url("../Resources/Back.png");
     background-size: 100%;
     background-repeat: no-repeat;
 }
 
 #splash{
     width: 100%;
-    height: 100%;   
-    
-    
+    height: 100%;
 }
 
+h1{
+
+    font-family: Megrim;
+    font-size: 100px;
+    color: #e0ebcf;
+
+}
 .loader {  
-    margin-top: 35%;
-    display: inline-block;  
-    margin-left: 35px; 
+    margin-top: 3%;
+    display: inline-block;
     width: 30px;
     height: 30px;
     border: 4px solid #Fff;
