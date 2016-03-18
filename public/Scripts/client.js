@@ -458,7 +458,7 @@ $(document).ready(function () {
         changeName();
     });
 
-    $("#change-name").button().on("click", function () {
+    $("#change-name").on("click", function () {
         dialog.dialog("open");
     });
 
