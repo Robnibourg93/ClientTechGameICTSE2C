@@ -6,7 +6,7 @@ var downKey = false;
 var block_h = 30;
 var block_w = 30;
 var game = {};
-var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 1,playerSpriteY: 1, jumping: false};
+var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 1,playerSpriteY: 1, jumping: false, score: 0};
 var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
@@ -75,7 +75,7 @@ $(document).ready(function () {
     //game loop -> this part is needed to be rewitten so we can use player.moveTo(x,y). This will increase preformance of the propably.
     function draw() {
         clearCanvas();
-
+        drawScoreBoard();
         //if button is pushed move player by [speed]
         if (rightKey)
             if (localPlayer.velX < localPlayer.speed) {
@@ -286,6 +286,51 @@ $(document).ready(function () {
         if(localPlayer.vel){
         
         }
+    }
+
+    function drawScoreBoard(){
+
+        var canvas = document.getElementById("gameCanvas");
+        if (canvas.getContext) {
+            var context = canvas.getContext("2d");
+            var context2 = canvas.getContext("2d");
+            var context3 = canvas.getContext("2d");
+
+            var x = 20;
+            var y = 20;
+
+
+            context.fillStyle = "rgb(144, 210, 231)";
+            context.strokeStyle = "Blue";
+            context.textAlign = "left";
+
+            context.fillText( localPlayer.name + " : " + localPlayer.health + "HP" , 20, 20);
+            context.fillText( "score : " + localPlayer.score, 20, 40 );
+
+            context2.fillText(  "Player2 : " + localPlayer.health + "HP" , 120, 20);
+            context2.fillText( "score : " + localPlayer.score, 120, 40 );
+
+            context3.fillText( "Player3 : " + localPlayer.health + "HP" , 220, 20);
+            context3.fillText( "score : " + localPlayer.score, 220, 40 );
+            //
+            //for (var key in remotePlayers) {
+            //
+            //    if (!remotePlayers.hasOwnProperty(key)) continue;
+            //
+            //    var obj = remotePlayers[key];
+            //    for (var prop in obj) {
+            //
+            //        if(!obj.hasOwnProperty(prop)) continue;
+            //        alert(prop + " = " + obj[prop]);
+            //    }
+            //}
+            //
+
+            //context2.fillText(localPlayer.name + " : ", 20,50);
+
+            //context.fillText("World!", 10 + context.measureText("Hello ").width, 100);
+        }
+
     }
 
     function colCheck(shapeA, shapeB) {
