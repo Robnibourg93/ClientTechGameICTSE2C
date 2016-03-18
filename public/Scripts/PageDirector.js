@@ -6,6 +6,8 @@ function startSplash(){
     window.close();
     window.open('startsplash.html','_blank');
 
+    //redirect
+
 }
 
 function checkConnection(){
