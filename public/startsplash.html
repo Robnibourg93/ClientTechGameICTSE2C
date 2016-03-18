@@ -12,16 +12,12 @@ and open the template in the editor.
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
         <link rel="stylesheet" type="text/css" href="Stylesheets/splash.css">
         <link rel="stylesheet" type="text/css" href="Stylesheets/main.css">
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="Scripts/PageDirector.js"></script>
         <script type="text/javascript">
             $('#splash').ready()
             {
-                $('#main').load('maincanvas.html');
-                setTimeout(function () {
-                    $('#main').ready(function () {
-                        $('#splash').remove();
-                        window.location.href = "Index.html";
-                    });
-                }, 7000);
+                checkConnection();
             }
         </script>
     </head>

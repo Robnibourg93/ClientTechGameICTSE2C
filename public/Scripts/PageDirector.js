@@ -10,7 +10,9 @@ function startSplash(){
 
 function checkConnection(){
 
-    if (socket.socket.connected){
+    var socket = io.connect("http://localhost:8080");
+
+    if (socket.connected){
         console.log("connected");
         return true;
     }
