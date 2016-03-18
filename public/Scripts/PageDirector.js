@@ -1,33 +1,33 @@
 /**
  * Created by Jordi on 17-3-2016.
  */
+var socket = io.connect("http://localhost:8080");
 
 function startSplash(){
-    window.close();
-    window.open('startsplash.html','_blank');
 
-    //redirect
+    window.location.replace("startsplash.html");
 
 }
 
 function checkConnection(){
 
-    var socket = io.connect("http://localhost:8080");
 
     if (socket.connected){
         console.log("connected");
         return true;
     }
-    else console.log("disconnected");
+    else {
+        console.log("disconnected");
+    }
 }
 
 function runSplash(){
+    var con = checkConnection();
+    if(con){
+        window.location.replace("Index.html");
 
-    if(checkConnection()){
-        window.close();
-        window.open('Index.html','_blank');
     }else{
-        setTimeout('checkConnection()', 2000);
+        setTimeout('runSplash()', 2000);
     }
 
 }
