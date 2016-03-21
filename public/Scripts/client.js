@@ -6,11 +6,13 @@ var downKey = false;
 var block_h = 30;
 var block_w = 30;
 var game = {};
-var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 1,playerSpriteY: 1, jumping: false, score: 0, health: 100};
+var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 0,playerSpriteY: 0, jumping: false, score: 0, health: 100};
 var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
 var boxes = [];
+var bullets = [];
+var gun = {bulletSpeed = 4,rateOfFire = 6};
 var playerSprite = new Image();
 var animationSpeed = 10;
 var frameCounter;
@@ -62,7 +64,7 @@ $(document).ready(function () {
 
     //this will set the game-loop for drawing. sort of timer as it were.
     drawing = setInterval(draw, 12);
-    setInterval(animatePlayer, 150);
+
     //clearInterval(drawing);
 
     var pl = [];
@@ -75,6 +77,7 @@ $(document).ready(function () {
     //game loop -> this part is needed to be rewitten so we can use player.moveTo(x,y). This will increase preformance of the propably.
     function draw() {
         clearCanvas();
+       // animatePlayer();
         drawScoreBoard();
         //if button is pushed move player by [speed]
         if (rightKey)
@@ -155,13 +158,12 @@ $(document).ready(function () {
         remotePlayers.forEach(function (player) {
                 context.fillStyle = "red";
                 context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
-                var spritex = localPlayer.playerSpriteX * playerSprite.width / 11;
-                var spritey = localPlayer.playerSpriteY * playerSprite.width / 11;
-                context.drawImage(playerSprite, spritey, spritex, 128, 128, player.x, player.y, player.width, player.height)
+                var spritex = player.playerSpriteX * playerSprite.width / 11;
+                var spritey = player.playerSpriteY * playerSprite.height / 11;
+                context.drawImage(playerSprite, spritex, spritey,  128, 128, player.x, player.y, player.width, player.height)
         });
     }
     var jumpingRight = false, jumpingLeft = false, runningRight = false, runningLeft = false;
-    var animationFrame = { x: 1, Y: 1 };
     function animatePlayer() {
 
         if (localPlayer.jumping && localPlayer.velX > 0) {
@@ -175,11 +177,11 @@ $(document).ready(function () {
             }
             
             
-            if (!startFrame.x == 11) {
+            if (startFrame.x != 11) {
                 startFrame.x += 1;
             } else {
                 startFrame.x = 1;
-                if (!startFrame.y == 11) {
+                if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
                     startFrame = { x: 1, y: 5 }
@@ -190,9 +192,9 @@ $(document).ready(function () {
             if(startFrame.x == endFrame.x && startFrame.y == endFrame.y){
                 jumpingRight = false;
             }
+            console.log(JSON.stringify(startFrame))
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            console.log(localPlayer.playerSpriteX);
             jumpingLeft = false, runningRight = false, runningLeft = false;
         }
         if (localPlayer.jumping && localPlayer.velX < 0) {
@@ -206,11 +208,11 @@ $(document).ready(function () {
             }
 
 
-            if (!startFrame.x == 11) {
+            if (startFrame.x != 11) {
                 startFrame.x += 1;
             } else {
                 startFrame.x = 1;
-                if(!startFrame.y ==11){
+                if(startFrame.y != 11){
                     startFrame.y += 1;
                 }else{
                    startFrame = { x: 3, y: 10 }
@@ -220,9 +222,10 @@ $(document).ready(function () {
             if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
                 jumpingLeft = false;
             }
+            console.log(JSON.stringify(startFrame))
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            console.log(localPlayer.playerSpriteX);
+            jumpingRight = false, runningRight = false, runningLeft = false;
         }
         if (!localPlayer.jumping && localPlayer.velX < 0) {
             //animate walk left
@@ -235,11 +238,11 @@ $(document).ready(function () {
             }
 
 
-            if (!startFrame.x == 11) {
+            if (startFrame.x != 11) {
                 startFrame.x += 1;
             } else {
                 startFrame.x = 1;
-                if (!startFrame.y == 11) {
+                if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
                     startFrame = { x: 5, y: 6 }
@@ -249,26 +252,27 @@ $(document).ready(function () {
             if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
                 runningLeft = false;
             }
+            console.log(JSON.stringify(startFrame))
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            console.log(localPlayer.playerSpriteX);
+            jumpingLeft = false, runningRight = false, jumpingRight = false;
         }
         if (!localPlayer.jumping && localPlayer.velX > 0) {
             //animate walk Right
             
             if (!runningRight) {
-                
-                startFrame = { x: 4, y: 1 }
-                endFrame = { x: 5, y: 3 }
+                console.log('Start Animation run right')
+                startFrame = { x: 7, y: 1 }
+                endFrame = { x: 6, y: 2 }
                 runningRight = true;
             }
 
 
-            if (!startFrame.x == 11) {
+            if (startFrame.x != 11) {
                 startFrame.x += 1;
             } else {
                 startFrame.x = 1;
-                if (!startFrame.y == 11) {
+                if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
                     startFrame = { x: 4, y: 1 }
@@ -279,15 +283,47 @@ $(document).ready(function () {
                 console.log('walk right');
                 runningRight = false;
             }
+            console.log(JSON.stringify(startFrame))
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            console.log(localPlayer.playerSpriteX);
+            jumpingLeft = false, jumpingRight = false, runningLeft = false;
         }
         if(localPlayer.vel){
         
         }
     }
+    function drawBullets(){
+        //loop trough bullets collection
+        //add bullet speed to x loc
+        //draw bullet
+        bullets.forEach(function (bullet) {
+            context.fillStyle = "black";
+            context.fillRect(bullet.x, bullet.y, localPlayer.width, localPlayer.height);
+            if (){
 
+            }
+        })
+    }
+
+    var counter = 1;
+    function shoot(gun) {
+        //set direction
+
+
+        if (counter == gun.rateOfFire){
+            bullet = {speed : gun.bulletSpeed,x : localPlayer.x,y: localPlayer.y}
+
+            (localPlayer.velX > 0)? bullet.direction = 'right' : bullet.direction = 'left';
+
+            bullets.push(bullet);
+            counter = 0;
+        }else {
+            counter+ 1;
+        }
+
+        //change bullet speed according to gun
+        //add new bullet to list
+    }
     function drawScoreBoard(){
 
         var canvas = document.getElementById("gameCanvas");
@@ -378,6 +414,8 @@ $(document).ready(function () {
             upKey = true;
         else if (evt.keyCode === 40)
             downKey = true;
+        if (evt.keyCode === 32)
+            shoot(gun);
     }
     //handle key input
     function onKeyUp(evt) {

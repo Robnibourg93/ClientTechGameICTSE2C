@@ -34,7 +34,9 @@ io.on("connection", function(socket) {
         //check if player allready connected ifso update player pos and size
         for (var i = 0; i < players.length; i++) {
             if (players[i].id == player.id) {
-                players[i].name = player.name
+                players[i].name = player.name;
+                players[i].playerSpriteX = player.playerSpriteX;
+                players[i].playerSpriteY = player.playerSpriteY;
                 players[i].x = player.x;
                 players[i].y = player.y;
                 players[i].width = player.width;
@@ -56,7 +58,7 @@ io.on("connection", function(socket) {
             })
         }
         //to all other connected clients
-        socket.broadcast.emit("Players", players); 
+        socket.broadcast.emit("Players", players);
         io.emit("Players", players); //to all connected clients
     });
 
