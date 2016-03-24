@@ -8,6 +8,12 @@ function startSplash(){
     window.location.replace("startsplash.html");
 
 }
+function mainMenu(){
+    window.location.replace("mainlevelselect.html");
+}
+function gameOver(){
+    window.location.replace("gameOver.html");
+}
 
 function checkConnection(){
 

@@ -71,13 +71,11 @@ io.on("connection", function(socket) {
                 //found list
                 bulletList.splice(index,1);
                 found = true;
-                console.log("Bullet List found updating list");
                 bulletList.push(bulletListPlayer);
                 socket.broadcast.emit('allBullets',bulletList);
             }
         });
         if(!found){
-            console.log("new bullet list added");
             bulletList.push(bulletListPlayer);
             socket.broadcast.emit('allBullets',bulletList);
         }
