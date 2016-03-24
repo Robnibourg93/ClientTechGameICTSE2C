@@ -367,6 +367,8 @@ $(document).ready(function () {
         if (counter == gun.rateOfFire) {
 
             var bullet = {speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y,bulletSize: 4};
+            bullet.x = bullet.x + 17;
+            bullet.y = bullet.y + 13;
             (localPlayer.velX > 0) ? bullet.direction = 'right' : bullet.direction = 'left';
 
             console.log(bullet);
