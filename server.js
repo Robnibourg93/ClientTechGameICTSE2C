@@ -1,6 +1,7 @@
 var http = require('http');
 var server = http.createServer(handler);
 var players = [];
+var bulletList = [];
 server.listen(8080);
 console.log("listening on port 8080");
 
@@ -9,7 +10,7 @@ function handler( request, response ) {
  	response.write("Hello World");
     response.end();
     console.log("response sent..");
-};
+}
 
 var io = require("socket.io").listen(server);
 
@@ -62,9 +63,27 @@ io.on("connection", function(socket) {
         io.emit("Players", players); //to all connected clients
     });
 
-    
+    socket.on('Bullets',function(bulletListPlayer) {
+        var found = false;
+        bulletListPlayer.id = socket.id;
+        bulletList.forEach(function (BulletListP,index){
+            if(BulletListP.id == bulletListPlayer.id){
+                //found list
+                bulletList.splice(index,1);
+                found = true;
+                console.log("Bullet List found updating list");
+                bulletList.push(bulletListPlayer);
+                socket.broadcast.emit('allBullets',bulletList);
+            }
+        });
+        if(!found){
+            console.log("new bullet list added");
+            bulletList.push(bulletListPlayer);
+            socket.broadcast.emit('allBullets',bulletList);
+        }
+    });
 
-    socket.on('disconnect', function (data) {
+    socket.on('disconnect', function() {
 
         var found = false;
         var disconnectedPlayer;
@@ -102,6 +121,5 @@ io.on("connection", function(socket) {
                 console.log('Succes, player with id:'+disconnectedPlayer.id+' has been disconnected and removed from list');
             }
         }
-    })
+    });
 });
-

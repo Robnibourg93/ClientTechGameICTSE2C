@@ -3,19 +3,29 @@ var rightKey = false;
 var leftKey = false;
 var upKey = false;
 var downKey = false;
-var block_h = 30;
-var block_w = 30;
 var game = {};
-var localPlayer = {width: 40, height: 40, name: '', speed: 50, jumpSpeed:6, velX: 0, velY: 0,playerSpriteX: 0,playerSpriteY: 0, jumping: false, score: 0, health: 100};
+var localPlayer = {
+    width: 40,
+    height: 40,
+    name: '',
+    speed: 50,
+    jumpSpeed: 6,
+    velX: 0,
+    velY: 0,
+    playerSpriteX: 0,
+    playerSpriteY: 0,
+    jumping: false,
+    score: 0,
+    health: 100
+};
 var remotePlayers = [];
 var friction = 0.8;
 var gravity = 0.3;
 var boxes = [];
 var bullets = [];
-var gun = {bulletSpeed = 4,rateOfFire = 6};
+var remoteBullets = [];
+var gun = {bulletSpeed : 9, rateOfFire : 2};
 var playerSprite = new Image();
-var animationSpeed = 10;
-var frameCounter;
 playerSprite.src = "./Resources/Sprites/DudeFull.png";
 
 // dimensions
@@ -52,22 +62,21 @@ $(document).ready(function () {
 
     console.log(localPlayer.name);
     //get context game canvas
-    context = $('#gameCanvas')[0].getContext('2d');
+    canvas = $("#gameCanvas");
+    context = canvas[0].getContext('2d');
 
     //get canvas width and height
-    game.width = $('#gameCanvas').width();
-    game.height = $('#gameCanvas').height();
+    game.width = canvas.width();
+    game.height = canvas.height();
 
     //set player start position
     localPlayer.x = game.width / 2;
-    localPlayer.y = game.height -5 ;
+    localPlayer.y = game.height - 5;
 
     //this will set the game-loop for drawing. sort of timer as it were.
-    drawing = setInterval(draw, 12);
+    setInterval(draw, 12);
 
     //clearInterval(drawing);
-
-    var pl = [];
 
     //need to clear canvas else older drawings will polute game canvas(trail behind player for )
     function clearCanvas() {
@@ -77,7 +86,8 @@ $(document).ready(function () {
     //game loop -> this part is needed to be rewitten so we can use player.moveTo(x,y). This will increase preformance of the propably.
     function draw() {
         clearCanvas();
-       // animatePlayer();
+        drawBullets();
+        // animatePlayer();
         drawScoreBoard();
         //if button is pushed move player by [speed]
         if (rightKey)
@@ -94,10 +104,10 @@ $(document).ready(function () {
                 localPlayer.velY = -localPlayer.jumpSpeed * 2;
             }
         if (downKey) {
-          
+
         }
-            //animatePlayer();
-        
+        //animatePlayer();
+
 
         //Friction (slide) and gravity is set
         localPlayer.velX *= friction;
@@ -124,11 +134,10 @@ $(document).ready(function () {
         }
 
 
-
         localPlayer.x += localPlayer.velX;
         localPlayer.y += localPlayer.velY;
 
-       if (localPlayer.grounded) {
+        if (localPlayer.grounded) {
             localPlayer.velY = 0;
         }
         //Prevents a player to get out of the canvas
@@ -142,11 +151,11 @@ $(document).ready(function () {
             localPlayer.y = game.height - localPlayer.height;
             localPlayer.jumping = false;
         }
-        
+
         //draw player
         context.fillStyle = "red";
         //context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
-
+        socket.emit(bullets);
         //this will send the localPlayer to the server
         socket.emit("Player", localPlayer);
 
@@ -156,27 +165,29 @@ $(document).ready(function () {
 
         //draw other players
         remotePlayers.forEach(function (player) {
-                context.fillStyle = "red";
-                context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
-                var spritex = player.playerSpriteX * playerSprite.width / 11;
-                var spritey = player.playerSpriteY * playerSprite.height / 11;
-                context.drawImage(playerSprite, spritex, spritey,  128, 128, player.x, player.y, player.width, player.height)
+            context.fillStyle = "red";
+            context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
+            var spriteX = player.playerSpriteX * playerSprite.width / 11;
+            var spriteY = player.playerSpriteY * playerSprite.height / 11;
+            context.drawImage(playerSprite, spriteX, spriteY, 128, 128, player.x, player.y, player.width, player.height)
         });
     }
+
     var jumpingRight = false, jumpingLeft = false, runningRight = false, runningLeft = false;
+
     function animatePlayer() {
 
         if (localPlayer.jumping && localPlayer.velX > 0) {
             //animate jump right
-            
+
             if (!jumpingRight) {
                 console.log('jumping right');
-                endFrame = { x: 1, y: 6 };
-                startFrame = { x: 1, y: 5 };
+                var endFrame = {x: 1, y: 6};
+                var startFrame = {x: 1, y: 5};
                 jumpingRight = true;
             }
-            
-            
+
+
             if (startFrame.x != 11) {
                 startFrame.x += 1;
             } else {
@@ -184,26 +195,28 @@ $(document).ready(function () {
                 if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
-                    startFrame = { x: 1, y: 5 }
+                    startFrame = {x: 1, y: 5}
                 }
             }
-            
-            
-            if(startFrame.x == endFrame.x && startFrame.y == endFrame.y){
+
+
+            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
                 jumpingRight = false;
             }
-            console.log(JSON.stringify(startFrame))
+            console.log(JSON.stringify(startFrame));
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            jumpingLeft = false, runningRight = false, runningLeft = false;
+            jumpingLeft = false;
+            runningRight = false;
+            runningLeft = false;
         }
         if (localPlayer.jumping && localPlayer.velX < 0) {
             //animate jump left
-            
+
             if (!jumpingLeft) {
                 console.log('jumping left');
-                startFrame = { x: 3, y: 10 }
-                endFrame = { x: 3, y: 11 }
+                startFrame = {x: 3, y: 10};
+                endFrame = {x: 3, y: 11};
                 jumpingLeft = true;
             }
 
@@ -212,28 +225,28 @@ $(document).ready(function () {
                 startFrame.x += 1;
             } else {
                 startFrame.x = 1;
-                if(startFrame.y != 11){
+                if (startFrame.y != 11) {
                     startFrame.y += 1;
-                }else{
-                   startFrame = { x: 3, y: 10 }
-                }       
+                } else {
+                    startFrame = {x: 3, y: 10}
+                }
             }
 
-            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
-                jumpingLeft = false;
-            }
-            console.log(JSON.stringify(startFrame))
+           (startFrame.x == endFrame.x && startFrame.y == endFrame.y) ? jumpingLeft = false : null ;
+            console.log(JSON.stringify(startFrame));
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            jumpingRight = false, runningRight = false, runningLeft = false;
+            jumpingRight = false;
+            runningRight = false;
+            runningLeft = false;
         }
         if (!localPlayer.jumping && localPlayer.velX < 0) {
             //animate walk left
-            
+
             if (!runningLeft) {
                 console.log('walk left');
-                startFrame = { x: 5, y: 6 }
-                endFrame = { x: 6, y: 8 }
+                startFrame = {x: 5, y: 6};
+                endFrame = {x: 6, y: 8};
                 runningLeft = true;
             }
 
@@ -245,25 +258,26 @@ $(document).ready(function () {
                 if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
-                    startFrame = { x: 5, y: 6 }
+                    startFrame = {x: 5, y: 6}
                 }
             }
 
-            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) {
-                runningLeft = false;
-            }
-            console.log(JSON.stringify(startFrame))
+            if (startFrame.x == endFrame.x && startFrame.y == endFrame.y) runningLeft = false;
+            console.log(JSON.stringify(startFrame));
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            jumpingLeft = false, runningRight = false, jumpingRight = false;
+
+            jumpingLeft = false;
+            runningRight = false;
+            jumpingRight = false;
         }
         if (!localPlayer.jumping && localPlayer.velX > 0) {
             //animate walk Right
-            
+
             if (!runningRight) {
-                console.log('Start Animation run right')
-                startFrame = { x: 7, y: 1 }
-                endFrame = { x: 6, y: 2 }
+                console.log('Start Animation run right');
+                startFrame = {x: 7, y: 1};
+                endFrame = {x: 6, y: 2};
                 runningRight = true;
             }
 
@@ -275,7 +289,7 @@ $(document).ready(function () {
                 if (startFrame.y != 11) {
                     startFrame.y += 1;
                 } else {
-                    startFrame = { x: 4, y: 1 }
+                    startFrame = {x: 4, y: 1}
                 }
             }
 
@@ -283,48 +297,91 @@ $(document).ready(function () {
                 console.log('walk right');
                 runningRight = false;
             }
-            console.log(JSON.stringify(startFrame))
+            console.log(JSON.stringify(startFrame));
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
-            jumpingLeft = false, jumpingRight = false, runningLeft = false;
-        }
-        if(localPlayer.vel){
-        
+            jumpingLeft = false;
+            jumpingRight = false;
+            runningLeft = false;
         }
     }
-    function drawBullets(){
+
+    function drawBullets() {
         //loop trough bullets collection
         //add bullet speed to x loc
         //draw bullet
-        bullets.forEach(function (bullet) {
-            context.fillStyle = "black";
-            context.fillRect(bullet.x, bullet.y, localPlayer.width, localPlayer.height);
-            if (){
+        remoteBullets.forEach(function(remoteBulletsList){
+            remoteBulletsList.forEach(function (bullet,index) {
+                context.fillStyle = "Red";
+                context.fillRect(bullet.x, bullet.y, bullet.bulletSize, bullet.bulletSize);
+                if (bullet.direction == "right") {
+                    bullet.x += bullet.speed;
+                }else if (bullet.direction == "left"){
+                    bullet.x -= bullet.speed;
+                }
+                if (bullet.x >= game.width - bullet.bulletSize) {
+                    //remove bullet from list
+                    bullet.x = game.width - bullet.bulletSize;
 
+                    bullets.splice(index,1);
+                } else if (bullet.x <= 0) {
+
+                    bullet.x = 0;
+
+                    bullets.splice(index, 1);
+                }
+
+            })
+        });
+
+        bullets.forEach(function (bullet,index) {
+            context.fillStyle = "black";
+            console.log(bullet);
+            context.fillRect(bullet.x, bullet.y, bullet.bulletSize, bullet.bulletSize);
+            if (bullet.direction == "right") {
+                bullet.x += bullet.speed;
+            }else if (bullet.direction == "left"){
+                bullet.x -= bullet.speed;
             }
-        })
+            if (bullet.x >= game.width - bullet.bulletSize) {
+                //remove bullet from list
+                bullet.x = game.width - bullet.bulletSize;
+
+                bullets.splice(index,1);
+            } else if (bullet.x <= 0) {
+
+                bullet.x = 0;
+
+                bullets.splice(index, 1);
+            }
+        });
+        socket.emit("Bullets",bullets);
     }
 
-    var counter = 1;
+    var counter = gun.rateOfFire;
+
     function shoot(gun) {
         //set direction
 
 
-        if (counter == gun.rateOfFire){
-            bullet = {speed : gun.bulletSpeed,x : localPlayer.x,y: localPlayer.y}
+        if (counter == gun.rateOfFire) {
 
-            (localPlayer.velX > 0)? bullet.direction = 'right' : bullet.direction = 'left';
+            var bullet = {speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y,bulletSize: 4};
+            (localPlayer.velX > 0) ? bullet.direction = 'right' : bullet.direction = 'left';
+
+            console.log(bullet);
 
             bullets.push(bullet);
             counter = 0;
-        }else {
-            counter+ 1;
+        } else {
+            counter++;
         }
 
         //change bullet speed according to gun
         //add new bullet to list
     }
-    function drawScoreBoard(){
+
+    function drawScoreBoard() {
 
         var canvas = document.getElementById("gameCanvas");
         if (canvas.getContext) {
@@ -332,22 +389,18 @@ $(document).ready(function () {
             var context2 = canvas.getContext("2d");
             var context3 = canvas.getContext("2d");
 
-            var x = 20;
-            var y = 20;
-
-
             context.fillStyle = "rgb(144, 210, 231)";
             context.strokeStyle = "Blue";
             context.textAlign = "left";
 
-            context.fillText( localPlayer.name + " : " + localPlayer.health + "HP" , 20, 20);
-            context.fillText( "score : " + localPlayer.score, 20, 40 );
+            context.fillText(localPlayer.name + " : " + localPlayer.health + "HP", 20, 20);
+            context.fillText("score : " + localPlayer.score, 20, 40);
 
-            context2.fillText(  "Player2 : " + localPlayer.health + "HP" , 120, 20);
-            context2.fillText( "score : " + localPlayer.score, 120, 40 );
+            context2.fillText("Player2 : " + localPlayer.health + "HP", 120, 20);
+            context2.fillText("score : " + localPlayer.score, 120, 40);
 
-            context3.fillText( "Player3 : " + localPlayer.health + "HP" , 220, 20);
-            context3.fillText( "score : " + localPlayer.score, 220, 40 );
+            context3.fillText("Player3 : " + localPlayer.health + "HP", 220, 20);
+            context3.fillText("score : " + localPlayer.score, 220, 40);
             //
             //for (var key in remotePlayers) {
             //
@@ -373,7 +426,7 @@ $(document).ready(function () {
         // get the vectors to check against
         var vX = (shapeA.x + (shapeA.width / 2)) - (shapeB.x + (shapeB.width / 2)),
             vY = (shapeA.y + (shapeA.height / 2)) - (shapeB.y + (shapeB.height / 2)),
-            // add the half widths and half heights of the objects
+        // add the half widths and half heights of the objects
             hWidths = (shapeA.width / 2) + (shapeB.width / 2),
             hHeights = (shapeA.height / 2) + (shapeB.height / 2),
             colDir = null;
@@ -417,6 +470,7 @@ $(document).ready(function () {
         if (evt.keyCode === 32)
             shoot(gun);
     }
+
     //handle key input
     function onKeyUp(evt) {
         if (evt.keyCode === 39)
@@ -427,11 +481,12 @@ $(document).ready(function () {
             upKey = false;
         else if (evt.keyCode === 40)
             downKey = false;
+        if (evt.keyCode === 32)
+            counter = gun.rateOfFire;
     }
 
     //connect to server
     var socket = io.connect("http://localhost:8080");
-    var id = socket.io.engine.id;
 
     //listens to ServerMessage
     socket.on("ServerMessage", function (data) {
@@ -440,6 +495,10 @@ $(document).ready(function () {
 
     //send Player js object to server
     socket.emit("Player", localPlayer);
+
+    socket.on('allBullets',function(allBullets){
+        remoteBullets = allBullets;
+    });
 
     //get players on page load and display them in table.
     socket.on("getPlayers", function (players) {
@@ -451,7 +510,6 @@ $(document).ready(function () {
     socket.on("Players", function (players) {
         //this is kind of a hack to compare 2 json objects with each other. we can use this since the position of the player objects within the players doesn't change.
         if (JSON.stringify(remotePlayers) != JSON.stringify(players)) {
-            console.log('updating');
             //update localPlayer list.
             remotePlayers = players;
         }
@@ -465,29 +523,30 @@ $(document).ready(function () {
 
     //if player disconnected from server remove player from table
     socket.on("removePlayer", function (player) {
-        console.log("Player left the game :'(");
-        });
+        console.log("Player left the game :'(" + player.id);
+    });
 
     function updateTips(t) {
         tips
-                .text(t)
-                .addClass("ui-state-highlight");
+            .text(t)
+            .addClass("ui-state-highlight");
         setTimeout(function () {
             tips.removeClass("ui-state-highlight", 1500);
         }, 500);
     }
+
     socket.on('getId', function (player) {
         localPlayer.id = player.id;
-        console.log('testet:'+localPlayer.id);
+        console.log("test:" + localPlayer.id);
     });
-    
-    
+
+
     function checkLength(o, n, min, max) {
         console.log(o);
         if (o.val().length > max || o.val().length < min) {
             o.addClass("ui-state-error");
             updateTips("Length of " + n + " must be between " +
-                    min + " and " + max + ".");
+                min + " and " + max + ".");
             return false;
         } else {
             return true;
@@ -520,7 +579,7 @@ $(document).ready(function () {
     }
 
 
-    dialog = $("#dialog-form").dialog({
+    var dialog = $("#dialog-form").dialog({
         autoOpen: false,
         height: 240,
         width: 350,
@@ -532,11 +591,11 @@ $(document).ready(function () {
             }
         },
         close: function () {
-            form[ 0 ].reset();
+            form[0].reset();
         }
     });
 
-    form = dialog.find("form").on("submit", function (event) {
+    var form = dialog.find("form").on("submit", function (event) {
         event.preventDefault();
         changeName();
     });
@@ -546,8 +605,8 @@ $(document).ready(function () {
     });
 
     //Set game canvas width and height - 100 so it doesnt fill whole screen. (-100 serves as some kind of margin)
-    $("#gameCanvas").width(window.innerWidth - 100);
-    $("#gameCanvas").height(window.innerHeight - 100);
+    canvas.width(window.innerWidth - 100);
+    canvas.height(window.innerHeight - 100);
     $(document).keydown(onKeyDown);
     $(document).keyup(onKeyUp);
 
@@ -555,7 +614,7 @@ $(document).ready(function () {
 
 //if window resizes change width and height. This makes it scaleable.
 $(window).resize(function () {
-    $("#gameCanvas").width(window.innerWidth - 100);
-    $("#gameCanvas").height(window.innerHeight - 100);
+    canvas.width(window.innerWidth - 100);
+    canvas.height(window.innerHeight - 100);
 });
 
