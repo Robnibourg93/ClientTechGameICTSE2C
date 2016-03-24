@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="Stylesheets/main.css" />
     <script src="Scripts/client.js"></script>
+    <script src="Scripts/PageDirector.js"></script>
 </head>
 <body>
     <div class="player-name-modal " id="dialog-form" title="Awesome Name Changer">
@@ -22,6 +23,7 @@
         </form>
     </div>
     <div><a href="#" id="change-name" class="btn btn-sm animated-button victoria-one">Change Name</a></div>
+    <div><a href="#null" id="exitgame" class="btn btn-sm animated-button victoria-one" onclick="gameOver()">Exit game</a></div>
 
     <input id="playerName" type="hidden" name="localPlayerName" value="Player1" />
     <!---

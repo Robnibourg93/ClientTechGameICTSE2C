@@ -12,7 +12,7 @@ var friction = 0.8;
 var gravity = 0.3;
 var boxes = [];
 var bullets = [];
-var gun = {bulletSpeed = 4,rateOfFire = 6};
+var gun = {bulletSpeed : 4,rateOfFire : 6};
 var playerSprite = new Image();
 var animationSpeed = 10;
 var frameCounter;
@@ -299,9 +299,7 @@ $(document).ready(function () {
         bullets.forEach(function (bullet) {
             context.fillStyle = "black";
             context.fillRect(bullet.x, bullet.y, localPlayer.width, localPlayer.height);
-            if (){
 
-            }
         })
     }
 
