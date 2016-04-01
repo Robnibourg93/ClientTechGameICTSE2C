@@ -31,28 +31,60 @@ playerSprite.src = "./Resources/Sprites/DudeFull.png";
 // dimensions
 
 boxes.push({
-    x: 920,
-    y: 350,
-    width: 80,
-    height: 80
+    x: 0,
+    y: 0,
+    width: 1200,
+    height: 0.1
 });
+
 boxes.push({
-    x: 970,
+    x: 0,
     y: 400,
-    width: 80,
-    height: 80
+    width: 100,
+    height: 20
 });
+
 boxes.push({
-    x: 1020,
-    y: 300,
-    width: 80,
-    height: 80
+    x: 300,
+    y: 200,
+    width: 100,
+    height: 20
 });
+
 boxes.push({
-    x: 570,
+    x: 230,
+    y: 500,
+    width: 15,
+    height: 100
+});
+
+boxes.push({
+    x: 730,
+    y: 500,
+    width: 15,
+    height: 100
+});
+
+boxes.push({
+    x: 550,
+    y: 200,
+    width: 100,
+    height: 20
+});
+
+
+boxes.push({
+    x: 400,
     y: 450,
-    width: 40,
-    height: 40
+    width: 150,
+    height: 20
+});
+
+boxes.push({
+    x: 900,
+    y: 400,
+    width: 100,
+    height: 20
 });
 
 
