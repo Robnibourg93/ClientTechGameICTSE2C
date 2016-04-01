@@ -1,0 +1,20 @@
+.PlayerDiv{
+    display: inline-block;
+    padding: 10px;
+    color: #e0ebcf;
+}
+#PlayerName{
+    height: 40px;
+    width: 300px;
+    color: #34495e;
+}
+p{
+    display: inline-block;
+}
+h2{
+    color:#e0ebcf;
+}
+.lobbyLabel{
+    color: #e0ebcf;
+    font-family: Megrim;
+}

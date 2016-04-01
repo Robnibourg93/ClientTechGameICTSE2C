@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="Stylesheets/gameover.css">
+        <script src="Scripts/PageDirector.js"></script>
+        <script>
+            $('button.linkProxy').click(function(){
+                $('#' + $(this).attr('rel')).click();
+            });
+
+        </script>
+
+    </head>
+    <body>
+    <audio autoplay>
+        <source src="Resources/Sounds/gameover.wav" type="audio/wav">
+    </audio>
+    <h1>GAME OVER</h1>
+
+    <div class="row">
+        <div class="button"> <a href="#null" class="btn btn-sm animated-button victoria-one" onclick="mainMenu()">Return to menu</a> </div>
+        <div class="button"> <a href="#" class="btn btn-sm animated-button victoria-one">Exit game</a> </div>
+        <div class="button"> <a href="#" class="btn btn-sm animated-button victoria-one">Options</a> </div>
+    </div>
+    </body>
+</html>
+

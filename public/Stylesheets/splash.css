@@ -1,23 +1,28 @@
-body{
+body {
     width: 100%;
     height: 100%;
     text-align: center;
-    background: url("../Resources/Splash.png");
+    background: url("../Resources/Back.png");
     background-size: 100%;
     background-repeat: no-repeat;
 }
 
-#splash{
-    width: 100%;
-    height: 100%;   
-    
-    
+#header {
+    color: #e0ebcf;
+    font-family: Megrim;
+    font-size: 200px;
+    padding-top: 3%;
+
 }
 
-.loader {  
-    margin-top: 35%;
-    display: inline-block;  
-    margin-left: 35px; 
+#splash {
+    width: 100%;
+    height: 100%;
+}
+
+.loader {
+    margin-top: 10%;
+    display: inline-block;
     width: 30px;
     height: 30px;
     border: 4px solid #Fff;

@@ -1,18 +1,35 @@
 <html>
 <head>
     <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="Stylesheets/main.css" />
+    <title>XAVAZ</title>
     <script src="Scripts/client.js"></script>
+    <script src="Scripts/PageDirector.js"></script>
 </head>
 <body>
+    <div class="player-name-modal " id="dialog-form" title="Awesome Name Changer">
+        <form>
+            <fieldset>
+
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter name" class="text ui-widget-content ui-corner-all">
+
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+    <div><a href="#" id="change-name" class="btn btn-sm animated-button victoria-one">Change Name</a></div>
+    <div><a href="#null" id="exitgame" class="btn btn-sm animated-button victoria-one" onclick="gameOver()">Exit game</a></div>
+
+    <input id="playerName" type="hidden" name="localPlayerName" value="Player1" />
 	<div id="mainContainer">
 		<canvas width="1000" height="600" id="gameCanvas"></canvas>
 	</div>
-    <table id="players">
-        <tbody>
-            <tr><th>player id</th><th>player x</th><th>player y</th><th>player width</th><th>player height</th></tr>
-        </tbody>
-    </table>
+
 </body>
 </html>
