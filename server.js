@@ -14,7 +14,6 @@ function handler(request, response) {
 
 var io = require("socket.io").listen(server);
 
-
 io.on("connection", function (socket) {
 
     console.log("user connected: " + socket.id);
@@ -25,6 +24,76 @@ io.on("connection", function (socket) {
     });
 
     io.emit('getId', socket.id);
+
+    function valueInRange(value, min, max) {
+
+        return (value <= max) && (value >= min);
+
+    }
+
+    function checkCollision(A, B) {
+        var xOverlap = valueInRange(A.x, B.x, B.x + B.width) ||
+            valueInRange(B.x, A.x, A.x + A.bulletSize);
+
+        var yOverlap = valueInRange(A.y, B.y, B.y + B.height) ||
+            valueInRange(B.y, A.y, A.y + A.bulletSize);
+
+        return xOverlap && yOverlap;
+    }
+
+    function calculateDamage() {
+        var collided = false;
+        var hitPlayer = '';
+
+        bulletList.forEach(function (bulletListPlayer) {
+            bulletListPlayer.forEach(function (bullet, bulletIndex) {
+                players.forEach(function (player) {
+                    collided = checkCollision(bullet, player);
+                    if (collided) {
+                        bulletListPlayer.splice(bulletIndex, 1);
+                        increaseScore(bullet.shotBy);
+                        doDamage(hitPlayer);
+                    }
+                })
+            });
+
+        });
+
+    }
+
+    function increaseScore(playerName) {
+        console.log(playerName + 'scored');
+        players.forEach(function (player) {
+            if (player.name.localeCompare(playerName) == 0) {
+                player.score += 10;
+                io.sockets.connected[player.id].emit('score');
+            }
+        })
+
+    }
+
+    function doDamage(hitPlayer) {
+        console.log('player damage');
+        players.forEach(function (player) {
+            if (player.name.localeCompare(hitPlayer.name) == 0) {
+                player.health -= 10;
+                if (player.health < 0) {
+                    isDead(player);
+                }
+            }
+        })
+
+
+    }
+
+    function isDead(player) {
+        //reset player location
+        console.log('player died');
+        player.x = 3;
+        player.y = 3;
+        player.health = 100;
+        io.sockets.connected[player.id].emit('die');
+    }
 
     socket.on("Player", function (player) {
 
@@ -65,11 +134,14 @@ io.on("connection", function (socket) {
 
     socket.on('Bullets', function (bulletListPlayer) {
         var found = false;
+        calculateDamage();
         bulletListPlayer.id = socket.id;
+
         bulletList.forEach(function (BulletListP, index) {
             if (BulletListP.id == bulletListPlayer.id) {
                 //found list
                 bulletList.splice(index, 1);
+
                 found = true;
                 bulletList.push(bulletListPlayer);
                 socket.broadcast.emit('allBullets', bulletList);

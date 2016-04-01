@@ -367,7 +367,6 @@ $(document).ready(function () {
 
         bullets.forEach(function (bullet, index) {
             context.fillStyle = "black";
-            console.log(bullet);
             context.fillRect(bullet.x, bullet.y, bullet.bulletSize, bullet.bulletSize);
             if (bullet.direction == "right") {
                 bullet.x += bullet.speed;
@@ -391,18 +390,18 @@ $(document).ready(function () {
 
     var counter = gun.rateOfFire;
 
+
     function shoot(gun) {
         //set direction
-
-
+        var id = '';
+        id += (Math.random()* 100);
         if (counter == gun.rateOfFire) {
 
-            var bullet = {speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y, bulletSize: 4};
+            console.log(id);
+            var bullet = {id:id,speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y, bulletSize: 4, shotBy: localPlayer.name};
             bullet.x = bullet.x + 17;
             bullet.y = bullet.y + 13;
             (localPlayer.velX > 0) ? bullet.direction = 'right' : bullet.direction = 'left';
-
-            console.log(bullet);
 
             bullets.push(bullet);
             counter = 0;
@@ -522,9 +521,22 @@ $(document).ready(function () {
     var socket = io.connect("http://localhost:8080");
 
     //listens to ServerMessage
-    socket.on("ServerMessage", function (data) {
-        alert(data);
+    socket.on("die", function () {
+        localPlayer.x = 3;
+        localPlayer.y = 3;
+        localPlayer.health = 100;
     });
+
+    socket.on('score',function () {
+        localPlayer.score += 10;
+        console.log('player scored. score:'+localPlayer.score );
+    });
+
+    socket.on('takeDamage',function () {
+       localPlayer.health -= 10;
+        console.log('player damaged. health:'+localPlayer.health );
+    });
+        
 
     //send Player js object to server
     socket.emit("Player", localPlayer);
@@ -606,6 +618,7 @@ $(document).ready(function () {
 
         if (valid) {
             localPlayer.name = name.val();
+            localStorage.setItem('playerName',localPlayer.name);
             dialog.dialog("close");
         }
         return valid;
