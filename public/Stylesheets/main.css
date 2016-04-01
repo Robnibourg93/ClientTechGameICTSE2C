@@ -13,9 +13,24 @@ body {
 }
 
 #mainContainer {
-    height: 100%;
+    height: 90%;
     width: 100%;
     position: relative;
+
+
+}
+
+#change-name {
+    display: inline-block;
+    float: left;
+    margin-left: 50px;
+    margin-right: 25px;
+
+}
+
+#exitgame {
+    display: inline-block;
+
 
 }
 
@@ -29,6 +44,7 @@ body {
     background-image: url('../Resources/gameBackgroundTree.jpg');
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: -100px;
     display: block;
     background-repeat: no-repeat;
     background-size: cover;
@@ -106,6 +122,9 @@ a.animated-button:link, a.animated-button:visited {
 
 a.animated-button.victoria-one {
     border: 2px solid #34495e;
+    margin-top: 0px;
+
+
 }
 
 a.animated-button.victoria-one:after {
