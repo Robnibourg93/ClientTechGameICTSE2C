@@ -418,38 +418,16 @@ $(document).ready(function () {
         var canvas = document.getElementById("gameCanvas");
         if (canvas.getContext) {
             var context = canvas.getContext("2d");
-            var context2 = canvas.getContext("2d");
-            var context3 = canvas.getContext("2d");
 
             context.fillStyle = "rgb(144, 210, 231)";
             context.strokeStyle = "Blue";
             context.textAlign = "left";
-
-            context.fillText(localPlayer.name + " : " + localPlayer.health + "HP", 20, 20);
-            context.fillText("score : " + localPlayer.score, 20, 40);
-
-            context2.fillText("Player2 : " + localPlayer.health + "HP", 120, 20);
-            context2.fillText("score : " + localPlayer.score, 120, 40);
-
-            context3.fillText("Player3 : " + localPlayer.health + "HP", 220, 20);
-            context3.fillText("score : " + localPlayer.score, 220, 40);
-            //
-            //for (var key in remotePlayers) {
-            //
-            //    if (!remotePlayers.hasOwnProperty(key)) continue;
-            //
-            //    var obj = remotePlayers[key];
-            //    for (var prop in obj) {
-            //
-            //        if(!obj.hasOwnProperty(prop)) continue;
-            //        alert(prop + " = " + obj[prop]);
-            //    }
-            //}
-            //
-
-            //context2.fillText(localPlayer.name + " : ", 20,50);
-
-            //context.fillText("World!", 10 + context.measureText("Hello ").width, 100);
+            var playerCounter = 0;
+            remotePlayers.forEach(function (player) {
+                context.fillText(player.name + " : " + player.health + "HP", 20+(playerCounter*100), 20);
+                context.fillText("score : " + player.score, 20+(playerCounter*100), 40);
+                playerCounter++;
+            });
         }
 
     }
