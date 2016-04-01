@@ -37,3 +37,22 @@ function runSplash() {
     }
 
 }
+
+function runSplashLobby() {
+    var con = checkConnection();
+    if (con) {
+        window.location.replace("Lobby.html");
+
+    } else {
+        setTimeout('runSplashLobby()', 2000);
+    }
+
+}
+
+function checkForName(){
+    var name = localStorage.getItem('playerName');
+    if(name){
+        return true;
+    }
+    return false;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <title>XAVAZ - Homepage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
+        <link rel="stylesheet" type="text/css" href="Stylesheets/Lobby.css">
+        <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="Scripts/PageDirector.js"></script>
+        <script src="Scripts/Lobby.js"></script>
+    </head>
+<body>
+<h1>Xavaz</h1>
+<h2 class="lobbyLabel">Lobby</h2>
+<audio autoplay loop>
+    <!--<source src="Resources/Sounds/mainscreen.wav" type="audio/wav">-->
+</audio>
+
+<div class="row">
+
+    <input type="text" name="playerName" id="PlayerName" placeholder="Player name">
+    <div class="button" onclick="startGame()"><a href="#" class="btn btn-sm animated-button victoria-one">Start game</a></div>
+</div>
+<div class="row">
+    <div id="PlayerList">
+        <h2>
+            Players in game
+        </h2>
+        <div class="PlayerDiv">
+            <h4>
+                Player 1
+            </h4>
+            <p>
+                score : 0</br>
+                Health : 0
+            </p>
+        </div>
+        <div class="PlayerDiv">
+            <h4>
+                Player 1
+            </h4>
+            <p>
+                score : 0</br>
+                Health : 0
+            </p>
+        </div>
+        <div class="PlayerDiv">
+            <h4>
+                Player 1
+            </h4>
+            <p>
+                score : 0</br>
+                Health : 0
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
