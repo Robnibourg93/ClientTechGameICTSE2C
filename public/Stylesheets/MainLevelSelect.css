@@ -23,6 +23,8 @@ h1 {
 
 .row {
     padding-top: 2%;
+    margin-left: 0;
+    margin-right: 0;
     font-family: 'Lato', sans-serif;
 }
 
