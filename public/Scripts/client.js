@@ -58,7 +58,7 @@ boxes.push({
 
 $(document).ready(function () {
     //get player name from hiddenfield
-    localPlayer.name = $('#playerName').val();
+    localPlayer.name = localStorage.getItem('playerName');
 
     console.log(localPlayer.name);
     //get context game canvas
@@ -152,14 +152,13 @@ $(document).ready(function () {
             localPlayer.jumping = false;
         }
 
-        //draw player
-        context.fillStyle = "red";
-        //context.fillRect(localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
+
         socket.emit(bullets);
         //this will send the localPlayer to the server
         socket.emit("Player", localPlayer);
 
         //draw name
+        context.fillStyle = "red";
         context.fillText(localPlayer.name, localPlayer.x - (localPlayer.width / 5), localPlayer.y - 5);
 
 
