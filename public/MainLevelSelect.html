@@ -5,29 +5,153 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>XAVAZ - Homepage</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
-        <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
-        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-        <script src="Scripts/PageDirector.js"></script>
-    </head>
-    <body>
-    <h1>Xavaz</h1>
-    <audio autoplay loop>
-        <source src="Resources/Sounds/mainscreen.wav" type="audio/wav">
-    </audio>
+<head>
+    <title>XAVAZ - Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="Scripts/PageDirector.js"></script>
+    <script>
+        $(window).on("load", function () {
+
+                $("#item2").fadeIn('slow', function(){
+                    $("#item1").hide();
+
+            });
+                    // Second Animation complete
+        });
+    </script>
+</head>
+<body>
+<h1>Xavaz</h1>
+<audio autoplay loop>
+    <source src="Resources/Sounds/mainscreen.wav" type="audio/wav">
+</audio>
+
+<div id="item2" class="row">
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Join
+        Game</a></div>
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a></div>
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Options</a></div>
+    <div id="fade" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Test Area</a></div>
+</div>
+
+<div id="item1">
+    <div class="row">
+
+        <table class="userStoryTable">
+            <tr>
+                <th>User Stories</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>Als gebruiker kan ik me naam veranderen</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+            <tr>
+                <td>Als kan ik een level selecteren</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+            <tr>
+                <td>Als gebruiker kan ik bewegen in het spel</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+            <tr>
+                <td>Als gebruiker kan schieten in het spel</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+            <tr>
+                <td>Als gebruiker kan punten scoren in het spel</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+            <tr>
+                <td>Als gebruiker kan dood gaan door andere spelers</td>
+                <td class="succesStory"><img class="succes" src="Resources/Icons/checked.png" alt="checked"></td>
+            </tr>
+        </table>
+
+        <table class="testTable">
+            <tr>
+                <td class="TLabel">Website/opdracht :</td>
+                <td colspan="6">Portfolio opdracht 4</td>
+            </tr>
+            <tr>
+                <td class="TLabel">Datum :</td>
+                <td colspan="6">1-4-2016</td>
+            </tr>
+            <tr>
+                <td class="TLabel">Valide HTML5 :</td>
+                <td colspan="6"><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+            </tr>
+            <tr>
+                <td class="TLabel">Valide CSS3 :</td>
+                <td colspan="6"><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+            </tr>
+            <tr>
+                <td class="TLabel">Valide Javascript :</td>
+                <td colspan="6"><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+            </tr>
+            <tr>
+                <td class="TLabel">Browser :</td>
+                <td colspan="2"><img src="Resources/Icons/Ie-icon.png"/></td>
+                <td><img src="Resources/Icons/Firefox-icon.png" alt="checked"/></td>
+                <td><img src="Resources/Icons/Chrome-icon.png" alt="checked"/></td>
+                <td><img src="Resources/Icons/Opera-icon.png" alt="checked"/></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="TLabel">Versie :</td>
+                <td>9</td>
+                <td>10</td>
+                <td>38</td>
+                <td>49</td>
+                <td>36</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="TLabel">Design :</td>
+                <td><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+                <td><img class="succes" src="Resources/Icons/checked.png" alt="checked" alt="checked"/></td>
+                <td><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+                <td><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+                <td><img class="succes" src="Resources/Icons/checked.png" alt="checked"/></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
 
     <div class="row">
-        <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Join
-            Game</a></div>
-        <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a></div>
-        <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Options</a></div>
-        <div class="button"><a href="TestingTable.html" class="btn btn-sm animated-button victoria-one">Test Area</a></div>
+        <div id="fade2" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Main Menu</a>
+        </div>
     </div>
+</div>
+
+<script type="text/javascript">
+    $('#fade').click(function () {
+        $('#item2').fadeOut('slow', function () {
+            // First Animation complete
+
+            $("#item1").fadeIn('slow', function () {
+                // Second Animation complete
+            });
+        });
+    });
+
+    $('#fade2').click(function () {
+        $('#item1').fadeOut('slow', function () {
+            // First Animation complete
+
+            $("#item2").fadeIn('slow', function () {
+                // Second Animation complete
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
 
