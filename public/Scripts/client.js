@@ -24,7 +24,7 @@ var gravity = 0.3;
 var boxes = [];
 var bullets = [];
 var remoteBullets = [];
-var gun = {bulletSpeed : 9, rateOfFire : 2};
+var gun = {bulletSpeed: 9, rateOfFire: 2};
 var playerSprite = new Image();
 playerSprite.src = "./Resources/Sprites/DudeFull.png";
 
@@ -232,7 +232,7 @@ $(document).ready(function () {
                 }
             }
 
-           (startFrame.x == endFrame.x && startFrame.y == endFrame.y) ? jumpingLeft = false : null ;
+            (startFrame.x == endFrame.x && startFrame.y == endFrame.y) ? jumpingLeft = false : null;
             console.log(JSON.stringify(startFrame));
             localPlayer.playerSpriteX = startFrame.x;
             localPlayer.playerSpriteY = startFrame.y;
@@ -310,20 +310,20 @@ $(document).ready(function () {
         //loop trough bullets collection
         //add bullet speed to x loc
         //draw bullet
-        remoteBullets.forEach(function(remoteBulletsList){
-            remoteBulletsList.forEach(function (bullet,index) {
+        remoteBullets.forEach(function (remoteBulletsList) {
+            remoteBulletsList.forEach(function (bullet, index) {
                 context.fillStyle = "Red";
                 context.fillRect(bullet.x, bullet.y, bullet.bulletSize, bullet.bulletSize);
                 if (bullet.direction == "right") {
                     bullet.x += bullet.speed;
-                }else if (bullet.direction == "left"){
+                } else if (bullet.direction == "left") {
                     bullet.x -= bullet.speed;
                 }
                 if (bullet.x >= game.width - bullet.bulletSize) {
                     //remove bullet from list
                     bullet.x = game.width - bullet.bulletSize;
 
-                    bullets.splice(index,1);
+                    bullets.splice(index, 1);
                 } else if (bullet.x <= 0) {
 
                     bullet.x = 0;
@@ -334,20 +334,20 @@ $(document).ready(function () {
             })
         });
 
-        bullets.forEach(function (bullet,index) {
+        bullets.forEach(function (bullet, index) {
             context.fillStyle = "black";
             console.log(bullet);
             context.fillRect(bullet.x, bullet.y, bullet.bulletSize, bullet.bulletSize);
             if (bullet.direction == "right") {
                 bullet.x += bullet.speed;
-            }else if (bullet.direction == "left"){
+            } else if (bullet.direction == "left") {
                 bullet.x -= bullet.speed;
             }
             if (bullet.x >= game.width - bullet.bulletSize) {
                 //remove bullet from list
                 bullet.x = game.width - bullet.bulletSize;
 
-                bullets.splice(index,1);
+                bullets.splice(index, 1);
             } else if (bullet.x <= 0) {
 
                 bullet.x = 0;
@@ -355,7 +355,7 @@ $(document).ready(function () {
                 bullets.splice(index, 1);
             }
         });
-        socket.emit("Bullets",bullets);
+        socket.emit("Bullets", bullets);
     }
 
     var counter = gun.rateOfFire;
@@ -366,7 +366,7 @@ $(document).ready(function () {
 
         if (counter == gun.rateOfFire) {
 
-            var bullet = {speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y,bulletSize: 4};
+            var bullet = {speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y, bulletSize: 4};
             bullet.x = bullet.x + 17;
             bullet.y = bullet.y + 13;
             (localPlayer.velX > 0) ? bullet.direction = 'right' : bullet.direction = 'left';
@@ -498,7 +498,7 @@ $(document).ready(function () {
     //send Player js object to server
     socket.emit("Player", localPlayer);
 
-    socket.on('allBullets',function(allBullets){
+    socket.on('allBullets', function (allBullets) {
         remoteBullets = allBullets;
     });
 

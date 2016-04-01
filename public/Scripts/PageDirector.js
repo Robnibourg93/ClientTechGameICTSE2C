@@ -3,22 +3,22 @@
  */
 var socket = io.connect("http://localhost:8080");
 
-function startSplash(){
+function startSplash() {
 
     window.location.replace("startsplash.html");
 
 }
-function mainMenu(){
+function mainMenu() {
     window.location.replace("mainlevelselect.html");
 }
-function gameOver(){
+function gameOver() {
     window.location.replace("gameOver.html");
 }
 
-function checkConnection(){
+function checkConnection() {
 
 
-    if (socket.connected){
+    if (socket.connected) {
         console.log("connected");
         return true;
     }
@@ -27,12 +27,12 @@ function checkConnection(){
     }
 }
 
-function runSplash(){
+function runSplash() {
     var con = checkConnection();
-    if(con){
+    if (con) {
         window.location.replace("Index.html");
 
-    }else{
+    } else {
         setTimeout('runSplash()', 2000);
     }
 

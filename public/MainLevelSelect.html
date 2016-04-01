@@ -5,28 +5,30 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
-        <script src="Scripts/PageDirector.js"></script>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="Scripts/PageDirector.js"></script>
+    <script src="Scripts/TableLabelScript.js"></script>
+</head>
+<body>
+<h1>Xavaz</h1>
+<audio autoplay loop>
+    <source src="Resources/Sounds/mainscreen.wav" type="audio/wav">
+</audio>
 
-    </head>
-    <body>
-    <h1>Xavaz</h1>
-    <audio autoplay loop>
-        <source src="Resources/Sounds/mainscreen.wav" type="audio/wav" >
-    </audio>
-
-    <div class="row">
-        <div class="button"> <a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Start Game</a> </div>
-        <div class="button"> <a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a> </div>
-        <div class="button"> <a href="#" class="btn btn-sm animated-button victoria-one">Options</a> </div>
-
-
-    </div>
-    </body>
+<div class="row">
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Start
+        Game</a></div>
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a></div>
+    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Options</a></div>
+    <div class="button"><a href="TestingTable.html" class="btn btn-sm animated-button victoria-one">Test Area</a></div>
+</div>
+</body>
 </html>
 

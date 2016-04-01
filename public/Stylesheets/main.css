@@ -4,37 +4,37 @@
 h1 {
     color: white;
     text-align: center;
-    font-size:10em;
+    font-size: 10em;
 }
-
 
 body {
     background-color: #2c3e50;
     font-family: Megrim;
 }
 
-#mainContainer{
-	height: 100%;
-	width: 100%;
-	position: relative;
-	
+#mainContainer {
+    height: 100%;
+    width: 100%;
+    position: relative;
+
 }
+
 .player-name-modal {
-    background-color:#ecf0f1;
+    background-color: #ecf0f1;
     width: 300px;
     height: 300px;
 }
 
 #gameCanvas {
-    background-image:url('../Resources/gameBackgroundTree.jpg');
-    margin-left: auto ;
-	margin-right: auto ;
-	display: block;
+    background-image: url('../Resources/gameBackgroundTree.jpg');
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
     background-repeat: no-repeat;
     background-size: cover;
     -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 5, 34, 0.75);
-    -moz-box-shadow:    0px 0px 15px 5px rgba(0, 5, 34, 0.60);
-    box-shadow:         0px 0px 15px 5px rgba(0, 5, 34, 0.60);
+    -moz-box-shadow: 0px 0px 15px 5px rgba(0, 5, 34, 0.60);
+    box-shadow: 0px 0px 15px 5px rgba(0, 5, 34, 0.60);
 }
 
 a.animated-button:link, a.animated-button:visited {
@@ -45,7 +45,7 @@ a.animated-button:link, a.animated-button:visited {
     margin: 30px auto 0;
     padding: 14px 15px;
     color: #fff;
-    font-size:14px;
+    font-size: 14px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
@@ -59,6 +59,7 @@ a.animated-button:link, a.animated-button:visited {
     -o-transition: all 1s ease;
     transition: all 1s ease;
 }
+
 a.animated-button:link:after, a.animated-button:visited:after {
     content: "";
     position: absolute;
@@ -72,20 +73,23 @@ a.animated-button:link:after, a.animated-button:visited:after {
     -o-transition: all 0.75s ease 0s;
     transition: all 0.75s ease 0s;
 }
+
 a.animated-button:link:hover, a.animated-button:visited:hover {
     color: #FFF;
     text-shadow: none;
 }
+
 a.animated-button:link:hover:after, a.animated-button:visited:hover:after {
     height: 450%;
 }
+
 a.animated-button:link, a.animated-button:visited {
     position: relative;
     display: block;
     margin: 30px auto 0;
     padding: 14px 15px;
     color: #fff;
-    font-size:14px;
+    font-size: 14px;
     border-radius: 0;
     font-weight: bold;
     text-align: center;
@@ -103,6 +107,7 @@ a.animated-button:link, a.animated-button:visited {
 a.animated-button.victoria-one {
     border: 2px solid #34495e;
 }
+
 a.animated-button.victoria-one:after {
     background: #34495e;
     -moz-transform: translateX(-50%) translateY(-50%) rotate(-25deg);

@@ -1,4 +1,4 @@
-body{
+body {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -7,21 +7,20 @@ body{
     background-repeat: no-repeat;
 }
 
-#header{
+#header {
     color: #e0ebcf;
     font-family: Megrim;
     font-size: 200px;
     padding-top: 3%;
 
-
 }
-#splash{
+
+#splash {
     width: 100%;
     height: 100%;
 }
 
-
-.loader {  
+.loader {
     margin-top: 10%;
     display: inline-block;
     width: 30px;

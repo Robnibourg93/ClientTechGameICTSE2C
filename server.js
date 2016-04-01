@@ -5,9 +5,9 @@ var bulletList = [];
 server.listen(8080);
 console.log("listening on port 8080");
 
-function handler( request, response ) {
-	response.writeHead(200 , { "Content-Type": "text/plain"});
- 	response.write("Hello World");
+function handler(request, response) {
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("Hello World");
     response.end();
     console.log("response sent..");
 }
@@ -15,7 +15,7 @@ function handler( request, response ) {
 var io = require("socket.io").listen(server);
 
 
-io.on("connection", function(socket) {
+io.on("connection", function (socket) {
 
     console.log("user connected: " + socket.id);
 
@@ -24,12 +24,12 @@ io.on("connection", function(socket) {
         io.emit("message", data); //to all connected clients
     });
 
-        io.emit('getId',socket.id);
+    io.emit('getId', socket.id);
 
     socket.on("Player", function (player) {
 
         player.id = socket.id;
-        
+
         var found = false;
 
         //check if player allready connected ifso update player pos and size
@@ -63,25 +63,25 @@ io.on("connection", function(socket) {
         io.emit("Players", players); //to all connected clients
     });
 
-    socket.on('Bullets',function(bulletListPlayer) {
+    socket.on('Bullets', function (bulletListPlayer) {
         var found = false;
         bulletListPlayer.id = socket.id;
-        bulletList.forEach(function (BulletListP,index){
-            if(BulletListP.id == bulletListPlayer.id){
+        bulletList.forEach(function (BulletListP, index) {
+            if (BulletListP.id == bulletListPlayer.id) {
                 //found list
-                bulletList.splice(index,1);
+                bulletList.splice(index, 1);
                 found = true;
                 bulletList.push(bulletListPlayer);
-                socket.broadcast.emit('allBullets',bulletList);
+                socket.broadcast.emit('allBullets', bulletList);
             }
         });
-        if(!found){
+        if (!found) {
             bulletList.push(bulletListPlayer);
-            socket.broadcast.emit('allBullets',bulletList);
+            socket.broadcast.emit('allBullets', bulletList);
         }
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
 
         var found = false;
         var disconnectedPlayer;
@@ -115,8 +115,8 @@ io.on("connection", function(socket) {
                     break;
                 }
             }
-            if(!found){
-                console.log('Succes, player with id:'+disconnectedPlayer.id+' has been disconnected and removed from list');
+            if (!found) {
+                console.log('Succes, player with id:' + disconnectedPlayer.id + ' has been disconnected and removed from list');
             }
         }
     });
