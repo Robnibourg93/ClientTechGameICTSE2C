@@ -43,7 +43,6 @@ io.on("connection", function (socket) {
 
     function calculateDamage() {
         var collided = false;
-        var hitPlayer = '';
 
         bulletList.forEach(function (bulletListPlayer) {
             bulletListPlayer.forEach(function (bullet, bulletIndex) {
@@ -52,7 +51,7 @@ io.on("connection", function (socket) {
                     if (collided) {
                         bulletListPlayer.splice(bulletIndex, 1);
                         increaseScore(bullet.shotBy);
-                        doDamage(hitPlayer);
+                        doDamage(player);
                     }
                 })
             });
@@ -76,6 +75,7 @@ io.on("connection", function (socket) {
         console.log('player damage');
         players.forEach(function (player) {
             if (player.name.localeCompare(hitPlayer.name) == 0) {
+                io.sockets.connected[player.id].emit('takeDamage');
                 player.health -= 10;
                 if (player.health < 0) {
                     isDead(player);

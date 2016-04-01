@@ -533,7 +533,7 @@ $(document).ready(function () {
     });
 
     socket.on('takeDamage',function () {
-       localPlayer.health -= 10;
+        localPlayer.health -= 10;
         console.log('player damaged. health:'+localPlayer.health );
     });
         
