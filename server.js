@@ -2,7 +2,7 @@ var http = require('http');
 var server = http.createServer(handler);
 var players = [];
 var bulletList = [];
-server.listen(8080);
+server.listen();
 console.log("listening on port 8080");
 
 function handler(request, response) {
