@@ -354,12 +354,9 @@ $(document).ready(function () {
                 if (bullet.x >= game.width - bullet.bulletSize) {
                     //remove bullet from list
                     bullet.x = game.width - bullet.bulletSize;
-
                     bullets.splice(index, 1);
                 } else if (bullet.x <= 0) {
-
                     bullet.x = 0;
-
                     bullets.splice(index, 1);
                 }
 
