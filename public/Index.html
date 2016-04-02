@@ -1,22 +1,37 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="Stylesheets/main.css" />
+    <link rel="stylesheet" href="Stylesheets/main.css"/>
     <title>XAVAZ</title>
     <script src="Scripts/client.js"></script>
     <script src="Scripts/PageDirector.js"></script>
+    <script>
+        $(window).on("load", function () {
+
+            $("#item1").fadeIn('slow', function () {
+                $("#item1").hide();
+
+                $("#item1").fadeIn(1000, function () {
+
+                });
+
+            });
+        });
+    </script>
 </head>
 <body>
+<div id="item1">
     <div class="player-name-modal " id="dialog-form" title="Awesome Name Changer">
         <form>
             <fieldset>
 
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="Enter name" class="text ui-widget-content ui-corner-all">
+                <input type="text" name="name" id="name" placeholder="Enter name"
+                       class="text ui-widget-content ui-corner-all">
 
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -24,12 +39,24 @@
         </form>
     </div>
     <div><a href="#" id="change-name" class="btn btn-sm animated-button victoria-one">Change Name</a></div>
-    <div><a href="#null" id="exitgame" class="btn btn-sm animated-button victoria-one" onclick="gameOver()">Exit game</a></div>
+    <div id="fade"><a href="#null" id="exitgame" class="btn btn-sm animated-button victoria-one">Exit
+        game</a>
+    </div>
 
-    <input id="playerName" type="hidden" name="localPlayerName" value="Player1" />
-	<div id="mainContainer">
-		<canvas width="1000" height="600" id="gameCanvas"></canvas>
-	</div>
+    <input id="playerName" type="hidden" name="localPlayerName" value="Player1"/>
+    <div id="mainContainer">
+        <canvas width="1000" height="600" id="gameCanvas"></canvas>
+    </div>
+</div>
+
+<script>
+    $('#fade').click(function () {
+        $('#item1').fadeOut(1000, function () {
+            gameOver();
+
+        });
+    });
+</script>
 
 </body>
 </html>

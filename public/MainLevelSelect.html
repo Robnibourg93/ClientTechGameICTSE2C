@@ -16,21 +16,26 @@ and open the template in the editor.
     <script src="Scripts/PageDirector.js"></script>
     <script>
         $(window).on("load", function () {
+            $("#item2").fadeIn('slow', function () {
+                $("#item1").hide();
+                $("#item2").hide();
+                $("#title").hide();
 
-                $("#item2").fadeIn('slow', function(){
-                    $("#item1").hide();
-
+                $("#title").fadeIn(1000, function () {
+                });
+                $("#item2").fadeIn(2000, function () {
+                });
             });
-                    // Second Animation complete
         });
     </script>
 </head>
 <body>
-<h1>Xavaz</h1>
+
 <audio autoplay loop>
     <source src="Resources/Sounds/mainscreen.wav" type="audio/wav">
 </audio>
 
+<h1 id="title">Xavaz</h1>
 <div id="item2" class="row">
     <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Join
         Game</a></div>
@@ -41,7 +46,6 @@ and open the template in the editor.
 
 <div id="item1">
     <div class="row">
-
         <table class="userStoryTable">
             <tr>
                 <th>User Stories</th>
@@ -121,7 +125,6 @@ and open the template in the editor.
                 <td></td>
             </tr>
         </table>
-
     </div>
 
     <div class="row">
@@ -133,20 +136,14 @@ and open the template in the editor.
 <script type="text/javascript">
     $('#fade').click(function () {
         $('#item2').fadeOut('slow', function () {
-            // First Animation complete
-
             $("#item1").fadeIn('slow', function () {
-                // Second Animation complete
             });
         });
     });
 
     $('#fade2').click(function () {
         $('#item1').fadeOut('slow', function () {
-            // First Animation complete
-
             $("#item2").fadeIn('slow', function () {
-                // Second Animation complete
             });
         });
     });

@@ -8,8 +8,10 @@ h1 {
 }
 
 body {
-    background-color: #2c3e50;
     font-family: Megrim;
+    background: url("../Resources/Back.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 #mainContainer {
