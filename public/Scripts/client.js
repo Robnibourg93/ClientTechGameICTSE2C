@@ -519,11 +519,6 @@ $(document).ready(function () {
         localPlayer.score += 10;
         console.log('player scored. score:'+localPlayer.score );
     });
-
-    socket.on('takeDamage',function () {
-        localPlayer.health -= 10;
-        console.log('player damaged. health:'+localPlayer.health );
-    });
         
 
     //send Player js object to server

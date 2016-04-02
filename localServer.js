@@ -76,7 +76,7 @@ io.on("connection", function (socket) {
         players.forEach(function (player) {
             if (player.name.localeCompare(hitPlayer.name) == 0) {
                 io.sockets.connected[player.id].emit('takeDamage');
-                player.health -= 10;
+                player.health -= 2;
                 if (player.health < 0) {
                     isDead(player);
                 }
