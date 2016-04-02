@@ -16,7 +16,7 @@ and open the template in the editor.
     <script src="Scripts/PageDirector.js"></script>
     <script>
         $(window).on("load", function () {
-            $("#item2").fadeIn('slow', function () {
+            $("#item2").fadeIn('fast', function () {
                 $("#item1").hide();
                 $("#item2").hide();
                 $("#title").hide();
@@ -37,7 +37,7 @@ and open the template in the editor.
 
 <h1 id="title">Xavaz</h1>
 <div id="item2" class="row">
-    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one" onclick="startSplash()">Join
+    <div id="fade3" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Join
         Game</a></div>
     <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a></div>
     <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Options</a></div>
@@ -147,6 +147,16 @@ and open the template in the editor.
             });
         });
     });
+
+
+    $('#fade3').click(function () {
+        $('#item2').fadeOut(2000, function () {
+            startSplash();
+        });
+    });
+
+
+
 </script>
 
 </body>

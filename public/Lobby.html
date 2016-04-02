@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
-        <title>XAVAZ - Homepage</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
-        <link rel="stylesheet" type="text/css" href="Stylesheets/Lobby.css">
-        <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
-        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-        <script src="Scripts/Lobby.js"></script>
-    </head>
+    <title>XAVAZ - Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="Stylesheets/MainLevelSelect.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/Lobby.css">
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="Scripts/PageDirector.js"></script>
+    <script src="Scripts/Lobby.js"></script>
+    <script>
+        $(window).on("load", function () {
+
+            $("#item1").fadeIn('fast', function () {
+                $("#item1").hide();
+
+                $("#item1").fadeIn(2000, function () {
+
+                });
+
+            });
+        });
+    </script>
+</head>
 <body>
 <h1>Xavaz</h1>
-<h2 class="lobbyLabel">Lobby</h2>
-<audio autoplay loop>
-    <!--<source src="Resources/Sounds/mainscreen.wav" type="audio/wav">-->
-</audio>
+<div id="item1">
+    <h2 class="lobbyLabel">Lobby</h2>
+    <audio autoplay loop>
+        <source src="Resources/Sounds/mainscreen.wav" type="audio/wav">
+    </audio>
 
-<div class="row">
+    <div class="row">
 
-    <input type="text" name="playerName" id="PlayerName" placeholder="Player name">
-    <div class="button" onclick="startGame()"><a href="#" class="btn btn-sm animated-button victoria-one">Start game</a></div>
-</div>
-<div class="row">
-    <h2>
-    Players in game
-    </h2>
-    <div id="PlayerList">
+        <input type="text" name="playerName" id="PlayerName" placeholder="Player name">
+        <div id="fade" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Start game</a>
+        </div>
+    </div>
+    <div class="row">
+        <h2>
+            Players in game
+        </h2>
+        <div id="PlayerList">
+        </div>
     </div>
 </div>
+<script>
+    $('#fade').click(function () {
+        $('#item1').fadeOut(2000, function () {
+            startGame();
+        });
+    });
+
+
+</script>
+
+
 </body>
 </html>
