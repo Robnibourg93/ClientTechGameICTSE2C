@@ -496,7 +496,7 @@ $(document).ready(function () {
     }
 
     //connect to server
-    var socket = io.connect("http://gamexavaz.azurewebsites.net/");
+    var socket = io();
 
     //listens to ServerMessage
     socket.on("die", function () {

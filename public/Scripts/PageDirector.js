@@ -1,7 +1,7 @@
 /**
  * Created by Jordi on 17-3-2016.
  */
-var socket = io.connect("http://gamexavaz.azurewebsites.net/");
+var socket = io();
 
 function startSplash() {
 
