@@ -7,8 +7,8 @@ var server = http.createServer(function (req, res) {
 
 var players = [];
 var bulletList = [];
-console.log("listening);
-    
+console.log("listening");
+
 var io = require("socket.io").listen(server);
 
 io.on("connection", function (socket) {
