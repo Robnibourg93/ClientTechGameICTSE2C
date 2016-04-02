@@ -33,4 +33,7 @@ function startGame() {
     localStorage.setItem('playerName', playerName);
 
     window.location.replace("startsplash.html");
+
+
+
 }
