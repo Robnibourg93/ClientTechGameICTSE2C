@@ -160,7 +160,7 @@ $(document).ready(function () {
                 localPlayer.grounded = true;
                 localPlayer.jumping = false;
             } else if (dir === "t") {
-                localPlayer.velY *= -1;
+                localPlayer.velY *= -0.1;
             }
         }
 
