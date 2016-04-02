@@ -1,7 +1,7 @@
 /**
  * Created by Jordi on 17-3-2016.
  */
-var socket = io.connect();
+var socket = io.connect("http://localhost:8080");
 
 function startSplash() {
 
