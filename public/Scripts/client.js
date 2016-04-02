@@ -160,9 +160,8 @@ $(document).ready(function () {
                 localPlayer.grounded = true;
                 localPlayer.jumping = false;
             } else if (dir === "t") {
-                localPlayer.velY *= -1;
+                localPlayer.velY *= -0.1;
             }
-
         }
 
 
@@ -350,6 +349,8 @@ $(document).ready(function () {
                 } else if (bullet.direction == "left") {
                     bullet.x -= bullet.speed;
                 }
+
+
                 if (bullet.x >= game.width - bullet.bulletSize) {
                     //remove bullet from list
                     bullet.x = game.width - bullet.bulletSize;
@@ -399,9 +400,18 @@ $(document).ready(function () {
 
             console.log(id);
             var bullet = {id:id,speed: gun.bulletSpeed, x: localPlayer.x, y: localPlayer.y, bulletSize: 4, shotBy: localPlayer.name};
-            bullet.x = bullet.x + 17;
-            bullet.y = bullet.y + 13;
+
             (localPlayer.velX > 0) ? bullet.direction = 'right' : bullet.direction = 'left';
+
+            if (bullet.direction == "right"){
+                bullet.x = bullet.x + 35;
+                bullet.y = bullet.y + 13;
+            }
+
+            if (bullet.direction == "left"){
+                bullet.x = bullet.x - 0;
+                bullet.y = bullet.y + 13;
+            }
 
             bullets.push(bullet);
             counter = 0;
@@ -500,8 +510,8 @@ $(document).ready(function () {
 
     //listens to ServerMessage
     socket.on("die", function () {
-        localPlayer.x = 3;
-        localPlayer.y = 3;
+        localPlayer.x = 50;
+        localPlayer.y = 500;
         localPlayer.health = 100;
     });
 
