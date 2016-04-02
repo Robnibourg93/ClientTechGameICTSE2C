@@ -1,7 +1,7 @@
 /**
  * Created by Jordi on 17-3-2016.
  */
-var socket = io();
+var socket = io.connect();
 
 function startSplash() {
 
