@@ -506,7 +506,7 @@ $(document).ready(function () {
     }
 
     //connect to server
-    var socket = io.connect("http://localhost:8080");
+    var socket = io();
 
     //listens to ServerMessage
     socket.on("die", function () {

@@ -1,16 +1,13 @@
 var http = require('http');
-var server = http.createServer(handler);
+var port = process.env.port || 1337;
+var server = http.createServer(function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello World\n');
+}).listen(port);
+
 var players = [];
 var bulletList = [];
-server.listen(8080);
-console.log("listening on port 8080");
-
-function handler(request, response) {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
-    response.end();
-    console.log("response sent..");
-}
+console.log("listening");
 
 var io = require("socket.io").listen(server);
 

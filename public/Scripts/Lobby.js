@@ -4,7 +4,7 @@
 $(document).ready(function () {
     var timeToUpdate = false;
     //connect to server
-    var socket = io.connect("http://localhost:8080");
+    var socket = io();
 
     setInterval(function () {
         timeToUpdate = true;
