@@ -354,12 +354,9 @@ $(document).ready(function () {
                 if (bullet.x >= game.width - bullet.bulletSize) {
                     //remove bullet from list
                     bullet.x = game.width - bullet.bulletSize;
-
                     bullets.splice(index, 1);
                 } else if (bullet.x <= 0) {
-
                     bullet.x = 0;
-
                     bullets.splice(index, 1);
                 }
 
@@ -506,7 +503,7 @@ $(document).ready(function () {
     }
 
     //connect to server
-    var socket = io();
+    var socket = io.connect("http://localhost:8080");
 
     //listens to ServerMessage
     socket.on("die", function () {
@@ -518,11 +515,6 @@ $(document).ready(function () {
     socket.on('score',function () {
         localPlayer.score += 10;
         console.log('player scored. score:'+localPlayer.score );
-    });
-
-    socket.on('takeDamage',function () {
-        localPlayer.health -= 10;
-        console.log('player damaged. health:'+localPlayer.health );
     });
         
 

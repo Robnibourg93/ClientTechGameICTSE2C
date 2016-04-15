@@ -15,16 +15,16 @@ and open the template in the editor.
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="Scripts/PageDirector.js"></script>
     <script>
-        $(window).on("load", function () {
-            $("#item2").fadeIn('fast', function () {
-                $("#item1").hide();
-                $("#item2").hide();
-                $("#title").hide();
+
+        $(window).on('load', function () {
+            $("#item1").hide();
+            $("#item2").hide();
+            $("#title").hide();
 
                 $("#title").fadeIn(1000, function () {
                 });
                 $("#item2").fadeIn(2000, function () {
-                });
+
             });
         });
     </script>
@@ -39,8 +39,6 @@ and open the template in the editor.
 <div id="item2" class="row">
     <div id="fade3" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Join
         Game</a></div>
-    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Level Select</a></div>
-    <div class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Options</a></div>
     <div id="fade" class="button"><a href="#" class="btn btn-sm animated-button victoria-one">Test Area</a></div>
 </div>
 
