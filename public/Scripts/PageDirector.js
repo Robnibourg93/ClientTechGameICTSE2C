@@ -30,7 +30,7 @@ function checkConnection() {
 function runSplash() {
     var con = checkConnection();
     if (con) {
-        $('#item1').fadeOut(2000, function(){
+        $('#fadeBox').fadeOut(2000, function(){
         window.location.replace("Index.html");
         });
 

@@ -17,12 +17,13 @@ and open the template in the editor.
     <script src="Scripts/PageDirector.js"></script>
     <script type="text/javascript">
         $(window).on("load", function () {
-                $("#item1").hide();
-                $("#item1").fadeIn(2000, function () {
+                var fadeBox = $("#fadeBox");
+                fadeBox.hide();
+                fadeBox.fadeIn(2000, function () {
             });
         });
 
-        $('#splash').ready()
+        $('#splash').ready();
         {
             if (checkForName()) {
                 runSplash();
@@ -34,7 +35,7 @@ and open the template in the editor.
 </head>
 <body>
 <h1 id="header">Xavaz</h1>
-<div id="item1">
+<div id="fadeBox">
 <div id="splash">
     <div id="lol">
         <div id="loaders">

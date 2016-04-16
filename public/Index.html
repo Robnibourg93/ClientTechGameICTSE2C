@@ -11,14 +11,15 @@
     <script src="Scripts/PageDirector.js"></script>
     <script>
         $(window).on("load", function () {
-                $("#item1").hide();
-                $("#item1").fadeIn(1000, function () {
+                var fadeBox = $("#fadebox");
+                fadeBox.hide();
+                fadeBox.fadeIn(1000, function () {
             });
         });
     </script>
 </head>
 <body>
-<div id="item1">
+<div id="fadeBox">
     <div class="player-name-modal " id="dialog-form" title="Awesome Name Changer">
         <form>
             <fieldset>
@@ -45,7 +46,7 @@
 
 <script>
     $('#fade').click(function () {
-        $('#item1').fadeOut(1000, function () {
+        $('#fadeBox').fadeOut(1000, function () {
             gameOver();
 
         });
