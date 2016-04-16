@@ -190,16 +190,20 @@ $(document).ready(function () {
 
         //draw name
         context.fillStyle = "red";
+        var spriteX = localPlayer.playerSpriteX * playerSprite.width / 11;
+        var spriteY = localPlayer.playerSpriteY * playerSprite.height / 11;
         context.fillText(localPlayer.name, localPlayer.x - (localPlayer.width / 5), localPlayer.y - 5);
-
+        context.drawImage(playerSprite, spriteX, spriteY, 128, 128, player.x, player.y, player.width, player.height);
 
         //draw other players
         remotePlayers.forEach(function (player) {
-            context.fillStyle = "red";
-            context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
-            var spriteX = player.playerSpriteX * playerSprite.width / 11;
-            var spriteY = player.playerSpriteY * playerSprite.height / 11;
-            context.drawImage(playerSprite, spriteX, spriteY, 128, 128, player.x, player.y, player.width, player.height)
+            if (player.name.localeCompare(localPlayer.name) != 0) {
+                context.fillStyle = "red";
+                context.fillText(player.name, player.x - (player.width / 5), player.y - 5);
+                var spriteX = player.playerSpriteX * playerSprite.width / 11;
+                var spriteY = player.playerSpriteY * playerSprite.height / 11;
+                context.drawImage(playerSprite, spriteX, spriteY, 128, 128, player.x, player.y, player.width, player.height);
+            }
         });
     }
 
