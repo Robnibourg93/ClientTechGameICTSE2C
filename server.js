@@ -1,10 +1,10 @@
 var http = require('http');
 var port = process.env.port || 1337;
 var server = http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('<script>
-    window.location = "http://gamexavaz.azurewebsites.net/MainLevelSelect.html";
-    </script>');
+    response.writeHead(302, {
+    'Location': 'MainLevelSelect.html'
+});
+response.end();
 }).listen(port);
 
 var players = [];
