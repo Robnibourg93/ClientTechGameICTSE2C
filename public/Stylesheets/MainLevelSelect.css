@@ -109,7 +109,12 @@ a.animated-button.victoria-one:after {
 #testingTable{
     display: none;
 }
-
+#title{
+    display: none;
+}
+#fadeBox{
+    display: none;
+}
 .testTable {
     display: inline-table;
     margin: 0 auto;

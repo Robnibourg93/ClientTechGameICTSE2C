@@ -1,8 +1,4 @@
 $(window).on('load', function () {
-    $("#testingTable").hide();
-    $("#fadeBox").hide();
-    $("#title").hide();
-
     $("#title").fadeIn(1000, function () {
     });
     $("#fadeBox").fadeIn(2000, function () {
