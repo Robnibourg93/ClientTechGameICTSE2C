@@ -193,7 +193,7 @@ $(document).ready(function () {
         var spriteX = localPlayer.playerSpriteX * playerSprite.width / 11;
         var spriteY = localPlayer.playerSpriteY * playerSprite.height / 11;
         context.fillText(localPlayer.name, localPlayer.x - (localPlayer.width / 5), localPlayer.y - 5);
-        context.drawImage(playerSprite, spriteX, spriteY, 128, 128, player.x, player.y, player.width, player.height);
+        context.drawImage(playerSprite, spriteX, spriteY, 128, 128, localPlayer.x, localPlayer.y, localPlayer.width, localPlayer.height);
 
         //draw other players
         remotePlayers.forEach(function (player) {
